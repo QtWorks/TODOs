@@ -1,0 +1,109 @@
+MainWindow
+{
+  background: rgba(0,0,0,0%);
+}
+
+MenuToolBar
+{
+  background: rgba(0,0,0,0%);
+}
+
+StatusBar
+{
+  background: rgba(0,0,0,0,0%);
+}
+
+QCheckBox:hover
+{
+  background: rgba(0,0,0,0,0%);
+}
+
+QScrollArea
+{
+  background: rgba(0,0,0,0%);
+  border: none;
+}
+
+QScrollBar
+{
+  background: rgba(0,0,0,0%);
+  border: none;
+}
+
+QScrollBar::handle:vertical
+{
+  background: %ELEMENT_COLOR%;
+  border: none;
+}
+
+QScrollBar::down-arrow:vertical, QScrollBar::up-arrow:vertical, QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
+{
+  background: none;
+  border: none;
+}
+
+QWidget
+{
+  border: none;
+}
+
+QToolButton
+{
+  background: rgba(0,0,0,0%);
+}
+
+GroupWidget
+{
+  background: rgba(0,0,0,0%);
+}
+
+GroupHeaderWidget
+{
+  border: 1px red solid;
+  background: rgba(0,0,0,0%);
+}
+
+GroupHeaderWidget > QPushButton
+{
+  border: 1px red solid;
+  background: %GROUP_COLOR%;
+}
+
+ElementWidget
+{
+  border: none;
+  background: %ELEMENT_COLOR%;
+}
+
+ElementWidget > QTextEdit
+{
+  font-size: 24em;
+  color: white;
+  border: none;
+  background: rgba(0,0,0,0%);
+}
+
+ElementWidget > QTextEdit:focus
+{
+  background: %GROUP_COLOR%;
+}
+
+ElementWidget > QPushButton
+{
+  color: white;
+  border: none;
+}
+
+HeaderLine
+{
+  color: white;
+  border: none;
+  background: %GROUP_COLOR%;
+}
+
+HeaderButton
+{
+  color: white;
+  border: none;
+  background: %GROUP_COLOR%;
+}
