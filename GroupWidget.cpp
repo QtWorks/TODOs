@@ -60,6 +60,10 @@ ElementWidget* GroupWidget::AddElement(QString text)
     ElementWidget* element = new ElementWidget(text);
     cLayout->addWidget(element);
     connect(element, SIGNAL(AddShortcuted()), this, SLOT(AddElement()));
+
+    if(this->isVisible())
+        emit EnsureElementIsVisible(element);
+
     element->SetFocus();
     return element;
 }

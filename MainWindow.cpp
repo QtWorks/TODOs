@@ -57,9 +57,16 @@ void MainWindow::Move(const QPoint v)
     move(v);
 }
 
+void MainWindow::ShowElement(QWidget* w)
+{
+    qApp->processEvents();
+    scroll->ensureWidgetVisible(w);
+}
+
 GroupWidget* MainWindow::AddGroupWidget()
 {
     GroupWidget* group = new GroupWidget(this);
+    connect(group, SIGNAL(EnsureElementIsVisible(QWidget*)), this, SLOT(ShowElement(QWidget*)));
     layout->addWidget(group);
     return group;
 }
