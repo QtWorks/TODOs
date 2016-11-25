@@ -30,6 +30,7 @@ public:
     bool IsExpanded() const;
 
 signals:
+    void EnsureElementIsVisible(QWidget* w);
 
 public slots:
     void Expand();

@@ -37,6 +37,7 @@ public:
     void ReadSettings();
 
 public slots:
+    void ShowElement(QWidget* w);
     GroupWidget *AddGroupWidget();
     void WriteData();
     void WriteSettings();

@@ -68,4 +68,9 @@ void ElementWidget::keyPressEvent(QKeyEvent *event)
     {
         emit AddShortcuted();
     }
+
+    if(event->key() == Qt::Key_Escape)
+    {
+        text->clearFocus();
+    }
 }
