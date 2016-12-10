@@ -6,13 +6,28 @@
 #include <QHBoxLayout>
 #include <QKeyEvent>
 
+class ElementText : public QTextEdit
+{
+    Q_OBJECT
+
+protected:
+    void focusOutEvent(QFocusEvent *event);
+
+public:
+    ElementText(QString text = "", QWidget *parent = 0);
+    virtual ~ElementText();
+
+signals:
+    void FocusLost();
+};
+
 class ElementWidget : public QFrame
 {
     Q_OBJECT
 
 private:
     QHBoxLayout* layout;
-    QTextEdit* text;
+    ElementText* text;
     QPushButton* remove;
 
 protected:

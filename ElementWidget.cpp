@@ -1,10 +1,29 @@
 #include "ElementWidget.h"
 
+ElementText::ElementText(QString text, QWidget *parent) : QTextEdit(text, parent)
+{
+
+}
+
+ElementText::~ElementText()
+{
+
+}
+
+void ElementText::focusOutEvent(QFocusEvent *event)
+{
+    QTextCursor tc = textCursor();
+    tc.clearSelection();
+    setTextCursor(tc);
+
+    QTextEdit::focusOutEvent(event);
+}
+
 ElementWidget::ElementWidget(QString _text, QWidget *parent) : QFrame(parent)
 {
     setMinimumHeight(20);
 
-    text = new QTextEdit(_text, this);
+    text = new ElementText(_text, this);
     text->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     text->setTabChangesFocus(true);
 
