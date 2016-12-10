@@ -43,6 +43,10 @@ public:
 
 signals:
     void AddShortcuted();
+    void MoveUp(ElementWidget*);
+    void MoveDown(ElementWidget*);
+    void FocusUp(ElementWidget*);
+    void FocusDown(ElementWidget*);
 
 public slots:
     void ResizeTextEdit();

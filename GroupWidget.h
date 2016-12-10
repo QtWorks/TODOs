@@ -35,6 +35,10 @@ signals:
 public slots:
     void Expand();
     ElementWidget* AddElement(QString text="");
+    void MoveUpElement(ElementWidget* w);
+    void MoveDownElement(ElementWidget* w);
+    void FocusUpElement(ElementWidget* w);
+    void FocusDownElement(ElementWidget* w);
     void DeleteAllElements();
     void MoveInLayout(QPoint v);
 };

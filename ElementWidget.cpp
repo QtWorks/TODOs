@@ -26,6 +26,7 @@ ElementWidget::ElementWidget(QString _text, QWidget *parent) : QFrame(parent)
     text = new ElementText(_text, this);
     text->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     text->setTabChangesFocus(true);
+    //text->setFocusPolicy(Qt::StrongFocus);
 
     remove = new QPushButton(QIcon::fromTheme("list-remove"), "", this);
     remove->setFixedSize(20,20);
@@ -86,6 +87,24 @@ void ElementWidget::keyPressEvent(QKeyEvent *event)
     if(event->matches(QKeySequence::AddTab) || event->matches(QKeySequence::New))
     {
         emit AddShortcuted();
+    }
+
+    if(event->modifiers() & Qt::ControlModifier)
+    {
+        if(event->key() == Qt::Key_Up)
+            emit MoveUp(this);
+
+        if(event->key() == Qt::Key_Down)
+            emit MoveDown(this);
+    }
+
+    if(event->modifiers() & Qt::AltModifier)
+    {
+        if(event->key() == Qt::Key_Up)
+            emit FocusUp(this);
+
+        if(event->key() == Qt::Key_Down)
+            emit FocusDown(this);
     }
 
     if(event->key() == Qt::Key_Escape)

@@ -59,7 +59,11 @@ ElementWidget* GroupWidget::AddElement(QString text)
 
     ElementWidget* element = new ElementWidget(text);
     cLayout->addWidget(element);
-    connect(element, SIGNAL(AddShortcuted()), this, SLOT(AddElement()));
+    connect(element, SIGNAL(AddShortcuted()),           this, SLOT(AddElement()));
+    connect(element, SIGNAL(MoveUp(ElementWidget*)),    this, SLOT(MoveUpElement(ElementWidget*)));
+    connect(element, SIGNAL(MoveDown(ElementWidget*)),  this, SLOT(MoveDownElement(ElementWidget*)));
+    connect(element, SIGNAL(FocusUp(ElementWidget*)),   this, SLOT(FocusUpElement(ElementWidget*)));
+    connect(element, SIGNAL(FocusDown(ElementWidget*)), this, SLOT(FocusDownElement(ElementWidget*)));
 
     if(this->isVisible())
         emit EnsureElementIsVisible(element);
@@ -68,6 +72,51 @@ ElementWidget* GroupWidget::AddElement(QString text)
     return element;
 }
 
+void GroupWidget::MoveUpElement(ElementWidget* w)
+{
+    int index = cLayout->indexOf(w);
+
+    if(index > 0)
+    {
+        cLayout->removeWidget(w);
+        cLayout->insertWidget(index-1, w);
+        emit EnsureElementIsVisible(w);
+    }
+}
+
+void GroupWidget::MoveDownElement(ElementWidget* w)
+{
+    int index = cLayout->indexOf(w);
+
+    if(index < Count()-1)
+    {
+        cLayout->removeWidget(w);
+        cLayout->insertWidget(index+1, w);
+        emit EnsureElementIsVisible(w);
+    }
+}
+
+void GroupWidget::FocusUpElement(ElementWidget* w)
+{
+    int index = cLayout->indexOf(w);
+
+    if(index > 0)
+    {
+        GetElement(index-1)->SetFocus();
+        emit EnsureElementIsVisible(w);
+    }
+}
+
+void GroupWidget::FocusDownElement(ElementWidget* w)
+{
+    int index = cLayout->indexOf(w);
+
+    if(index < Count()-1)
+    {
+        GetElement(index+1)->SetFocus();
+        emit EnsureElementIsVisible(w);
+    }
+}
 
 void GroupWidget::DeleteAllElements()
 {
