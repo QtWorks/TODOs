@@ -12,11 +12,28 @@ ElementText::~ElementText()
 
 void ElementText::focusOutEvent(QFocusEvent *event)
 {
-    QTextCursor tc = textCursor();
+    QTextCursor tc;
+
+    tc= textCursor();
     tc.clearSelection();
     setTextCursor(tc);
 
+    tc = textCursor();
+    QString temp = toPlainText();
+    while(temp.at(temp.size()-1).isSpace())
+    {
+        moveCursor(QTextCursor::End);
+        tc.deletePreviousChar();
+        temp = toPlainText();
+    }
+    setTextCursor(tc);
+
     QTextEdit::focusOutEvent(event);
+}
+
+void ElementText::insertFromMimeData(const QMimeData* source)
+{
+    insertPlainText(source->text());
 }
 
 ElementWidget::ElementWidget(QString _text, QWidget *parent) : QFrame(parent)

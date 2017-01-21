@@ -5,6 +5,8 @@
 #include <QTextEdit>
 #include <QHBoxLayout>
 #include <QKeyEvent>
+#include <QTextBlock>
+#include <QMimeData>
 
 class ElementText : public QTextEdit
 {
@@ -12,6 +14,7 @@ class ElementText : public QTextEdit
 
 protected:
     void focusOutEvent(QFocusEvent *event);
+    void insertFromMimeData(const QMimeData* source);
 
 public:
     ElementText(QString text = "", QWidget *parent = 0);
