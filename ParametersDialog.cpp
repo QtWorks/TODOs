@@ -161,7 +161,7 @@ void ParametersDialog::Open(QString str) const
 void ParametersDialog::SetStartUpPolicy(bool b)
 {
 #ifdef _WIN32
-    QSettings settings(startUpPath, QSettings::NativeFormat).setValue(qApp->applicationName(), b);
+    QSettings(startUpPath, QSettings::NativeFormat).setValue(qApp->applicationName(), b);
 #elif __APPLE__
     QFile f(startUpPath+qApp->applicationName()+".plist");
 
