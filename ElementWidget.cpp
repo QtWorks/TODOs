@@ -18,15 +18,10 @@ void ElementText::focusOutEvent(QFocusEvent *event)
     tc.clearSelection();
     setTextCursor(tc);
 
-    tc = textCursor();
     QString temp = toPlainText();
-    while(temp.at(temp.size()-1).isSpace())
-    {
-        moveCursor(QTextCursor::End);
-        tc.deletePreviousChar();
-        temp = toPlainText();
-    }
-    setTextCursor(tc);
+    while(temp.endsWith(' ')) temp.chop(1);
+    while(temp.endsWith('\n')) temp.chop(1);
+    setText(temp);
 
     QTextEdit::focusOutEvent(event);
 }
