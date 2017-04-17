@@ -6,7 +6,7 @@ GroupHeaderWidget::GroupHeaderWidget(QWidget *parent) : QWidget(parent)
     title->setFixedHeight(20);
     title->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    add = new QPushButton(QIcon::fromTheme("list-add"), "", this);
+    add = new QPushButton(QIcon(":/images/add"), "", this);
     add->setFixedSize(20,20);
 
     layout = new QHBoxLayout;

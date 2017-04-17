@@ -4,9 +4,9 @@ MenuToolBar::MenuToolBar(QWidget *parent) : QToolBar(parent)
 {
     setMovable(false);
 
-    add = addAction(QIcon::fromTheme("list-add"), "AddButton");
-    parameters = addAction(QIcon::fromTheme("preferences-system"), "SettingsButton");
-    quit = addAction(QIcon::fromTheme("application-exit"), "QuitButton");
+    add = addAction(QIcon(":/images/add"), "AddButton");
+    parameters = addAction(QIcon(":/images/params"), "SettingsButton");
+    quit = addAction(QIcon(":/images/quit"), "QuitButton");
 
     widgetForAction(add)->setFixedSize(30, 30);
     widgetForAction(parameters)->setFixedSize(30, 30);

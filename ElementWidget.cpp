@@ -40,7 +40,7 @@ ElementWidget::ElementWidget(QString _text, QWidget *parent) : QFrame(parent)
     text->setTabChangesFocus(true);
     //text->setFocusPolicy(Qt::StrongFocus);
 
-    remove = new QPushButton(QIcon::fromTheme("list-remove"), "", this);
+    remove = new QPushButton(QIcon(":/images/delete"), "", this);
     remove->setFixedSize(20,20);
 
     layout = new QHBoxLayout;

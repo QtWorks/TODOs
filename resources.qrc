@@ -2,4 +2,10 @@
     <qresource prefix="/">
         <file alias="qss">stylesheet.qss</file>
     </qresource>
+    <qresource prefix="/images">
+        <file alias="add">images/add.png</file>
+        <file alias="delete">images/delete.png</file>
+        <file alias="params">images/params.png</file>
+        <file alias="quit">images/quit.png</file>
+    </qresource>
 </RCC>
