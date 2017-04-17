@@ -2,3 +2,6 @@ Press ECHAP to lose focus
 Press Ctrl+T or Ctrl+N to create a new element in a group
 Press Ctrl+Up/Down to move up/down an element
 Press Alt+Up/Down to move focus up/down
+Press Ctrl+W to delete element
+Drag & Drop groups to move it
+Middle-click group's header to edit it
