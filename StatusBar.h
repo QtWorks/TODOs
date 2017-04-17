@@ -10,6 +10,7 @@ class StatusBar : public QStatusBar
 
 private:
     QPoint startPos;
+    bool moving;
 
 protected:
     void mouseMoveEvent(QMouseEvent *event);

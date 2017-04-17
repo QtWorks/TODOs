@@ -113,6 +113,9 @@ void ElementWidget::keyPressEvent(QKeyEvent *event)
 
         if(event->key() == Qt::Key_Down)
             emit MoveDown(this);
+
+        if(event->key() == Qt::Key_W)
+            deleteLater();
     }
 
     if(event->modifiers() & Qt::AltModifier)

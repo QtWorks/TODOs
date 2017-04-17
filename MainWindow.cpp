@@ -155,7 +155,7 @@ void MainWindow::WriteData()
 
 void MainWindow::ReadSettings()
 {
-    setFixedSize(500, 500);
+    setMinimumSize(250, 250);
     restoreGeometry(parameters->Settings()->value("MainWindow/Geometry", saveGeometry()).toByteArray());
 }
 

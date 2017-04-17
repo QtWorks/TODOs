@@ -88,7 +88,7 @@ void GroupWidget::MoveDownElement(ElementWidget* w)
 {
     int index = cLayout->indexOf(w);
 
-    if(index < Count()-1)
+    if(index > -1 && index < Count()-1)
     {
         cLayout->removeWidget(w);
         cLayout->insertWidget(index+1, w);
@@ -111,7 +111,7 @@ void GroupWidget::FocusDownElement(ElementWidget* w)
 {
     int index = cLayout->indexOf(w);
 
-    if(index < Count()-1)
+    if(index > -1 && index < Count()-1)
     {
         GetElement(index+1)->SetFocus();
         emit EnsureElementIsVisible(w);

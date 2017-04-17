@@ -5,12 +5,12 @@ MainWindow
 
 MenuToolBar
 {
-  background: rgba(0,0,0,0%);
+  background: %ELEMENT_COLOR%;
 }
 
 StatusBar
 {
-  background: rgba(0,0,0,0,0%);
+  background: %GROUP_COLOR%;
 }
 
 QCheckBox:hover
