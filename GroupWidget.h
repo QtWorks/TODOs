@@ -28,6 +28,7 @@ public:
     QString Title() const;
     void SetTitle(QString _title);
     bool IsExpanded() const;
+    GroupHeaderWidget* GetGroupHeaderWidget();
 
 signals:
     void EnsureElementIsVisible(QWidget* w);

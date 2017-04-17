@@ -68,6 +68,8 @@ GroupWidget* MainWindow::AddGroupWidget()
     GroupWidget* group = new GroupWidget(this);
     connect(group, SIGNAL(EnsureElementIsVisible(QWidget*)), this, SLOT(ShowElement(QWidget*)));
     layout->addWidget(group);
+    group->GetGroupHeaderWidget()->GetHeaderWidget()->ShowLine();
+    ShowElement(group);
     return group;
 }
 

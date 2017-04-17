@@ -30,6 +30,7 @@ public:
     virtual ~GroupHeaderWidget();
     QString Title() const;
     void SetTitle(QString _title);
+    HeaderWidget* GetHeaderWidget();
 
 signals:
     void ExpandPressed();

@@ -98,3 +98,8 @@ void GroupHeaderWidget::mouseReleaseEvent(QMouseEvent *event)
         emit GroupMoved(event->globalPos()-startDragPos);
     }
 }
+
+HeaderWidget* GroupHeaderWidget::GetHeaderWidget()
+{
+    return title;
+}

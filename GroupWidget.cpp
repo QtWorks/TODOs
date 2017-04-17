@@ -168,3 +168,8 @@ void GroupWidget::MoveInLayout(QPoint v)
     parentLayout->removeWidget(this);
     parentLayout->insertWidget(index, this);
 }
+
+GroupHeaderWidget* GroupWidget::GetGroupHeaderWidget()
+{
+    return header;
+}
