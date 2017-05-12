@@ -68,7 +68,7 @@ QString GroupHeaderWidget::Title() const
     return title->Text();
 }
 
-void GroupHeaderWidget::SetTitle(QString _title)
+void GroupHeaderWidget::SetTitle(const QString& _title)
 {
     title->SetText(_title);
     title->ShowButton();

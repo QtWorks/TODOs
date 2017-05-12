@@ -1,6 +1,6 @@
 #include "ElementWidget.h"
 
-ElementText::ElementText(QString text, QWidget *parent) : QTextEdit(text, parent)
+ElementText::ElementText(const QString& text, QWidget *parent) : QTextEdit(text, parent)
 {
 
 }
@@ -31,7 +31,7 @@ void ElementText::insertFromMimeData(const QMimeData* source)
     insertPlainText(source->text());
 }
 
-ElementWidget::ElementWidget(QString _text, QWidget *parent) : QFrame(parent)
+ElementWidget::ElementWidget(const QString& _text, QWidget *parent) : QFrame(parent)
 {
     setMinimumHeight(20);
 
@@ -78,7 +78,7 @@ QString ElementWidget::Text() const
     return text->toPlainText();
 }
 
-void ElementWidget::SetText(QString _text)
+void ElementWidget::SetText(const QString& _text)
 {
     text->setPlainText(_text);
     ResizeTextEdit();

@@ -52,7 +52,7 @@ void GroupWidget::Expand()
         container->hide();
 }
 
-ElementWidget* GroupWidget::AddElement(QString text)
+ElementWidget* GroupWidget::AddElement(const QString& text)
 {
     if(!isExpanded)
         Expand();
@@ -145,7 +145,7 @@ QString GroupWidget::Title() const
     return header->Title();
 }
 
-void GroupWidget::SetTitle(QString _title)
+void GroupWidget::SetTitle(const QString& _title)
 {
     header->SetTitle(_title);
 }

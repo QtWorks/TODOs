@@ -1,6 +1,6 @@
 #include "HeaderWidget.h"
 
-HeaderLine::HeaderLine(QString text, QWidget *parent) : QLineEdit(text, parent)
+HeaderLine::HeaderLine(const QString& text, QWidget *parent) : QLineEdit(text, parent)
 {
 
 }
@@ -16,7 +16,7 @@ void HeaderLine::focusOutEvent(QFocusEvent *event)
     QLineEdit::focusOutEvent(event);
 }
 
-HeaderButton::HeaderButton(QString text, QWidget *parent) : QPushButton(text, parent)
+HeaderButton::HeaderButton(const QString &text, QWidget *parent) : QPushButton(text, parent)
 {
 
 }
@@ -34,7 +34,7 @@ void HeaderButton::mousePressEvent(QMouseEvent *event)
         QPushButton::mousePressEvent(event);
 }
 
-HeaderWidget::HeaderWidget(QString text, QWidget *parent) : QWidget(parent)
+HeaderWidget::HeaderWidget(const QString& text, QWidget *parent) : QWidget(parent)
 {
     button = new HeaderButton(text, this);
     line = new HeaderLine(text, this);
@@ -56,7 +56,7 @@ HeaderWidget::~HeaderWidget()
 
 }
 
-void HeaderWidget::SetText(QString text)
+void HeaderWidget::SetText(const QString& text)
 {
     button->setText(text);
     line->setText(text);
