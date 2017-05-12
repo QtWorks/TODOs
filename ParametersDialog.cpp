@@ -83,9 +83,9 @@ QString ParametersDialog::ColorToRgba(const QColor& color) const
     return "rgba("+QString::number(color.red())+","+QString::number(color.green())+","+QString::number(color.blue())+","+QString::number(color.alpha())+");";
 }
 
-QColor ParametersDialog::RgbaToColor(QString rgba) const
+QColor ParametersDialog::RgbaToColor(const QString& rgba) const
 {
-    QStringList c = rgba.replace("rgba(", "").replace(")", "").split(",");
+    QStringList c = QString(rgba).replace("rgba(", "").replace(")", "").split(",");
     return QColor(c[0].toInt(), c[1].toInt(), c[2].toInt(), (c.count()>3) ? c[3].toInt() : 0);
 }
 
@@ -147,7 +147,7 @@ void ParametersDialog::OpenAbout() const
     Open("http://www.xavi-b.fr");
 }
 
-void ParametersDialog::Open(QString str) const
+void ParametersDialog::Open(const QString& str) const
 {
 #ifdef _WIN32
     QProcess::startDetached("explorer", QStringList() << str);
