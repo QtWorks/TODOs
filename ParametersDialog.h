@@ -41,7 +41,7 @@ public:
     QSettings* Settings() const;
     const QString Stylesheet() const;
     QString ColorToRgba(const QColor& color) const;
-    QColor RgbaToColor(QString rgba) const;
+    QColor RgbaToColor(const QString& rgba) const;
     QString GroupColor() const;
     QString ElementColor() const;
     QString FontColor() const;
@@ -53,7 +53,7 @@ public slots:
     void OpenDataFolder() const;
     void OpenShare() const;
     void OpenAbout() const;
-    void Open(QString str) const;
+    void Open(const QString& str) const;
     void SetStartUpPolicy(bool b);
     void SetGroupColor();
     void SetElementColor();

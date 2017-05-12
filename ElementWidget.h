@@ -17,7 +17,7 @@ protected:
     void insertFromMimeData(const QMimeData* source);
 
 public:
-    ElementText(QString text = "", QWidget *parent = 0);
+    ElementText(const QString& text = "", QWidget *parent = 0);
     virtual ~ElementText();
 
 signals:
@@ -38,10 +38,10 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 public:
-    ElementWidget(QString _text = "", QWidget *parent = 0);
+    ElementWidget(const QString& _text = "", QWidget *parent = 0);
     virtual ~ElementWidget();
     QString Text() const;
-    void SetText(QString _text);
+    void SetText(const QString& _text);
     void SetFocus();
 
 signals:

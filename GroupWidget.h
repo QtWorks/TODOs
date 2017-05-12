@@ -26,7 +26,7 @@ public:
     int Count() const;
     ElementWidget* GetElement(int i);
     QString Title() const;
-    void SetTitle(QString _title);
+    void SetTitle(const QString& _title);
     bool IsExpanded() const;
     GroupHeaderWidget* GetGroupHeaderWidget();
 
@@ -35,7 +35,7 @@ signals:
 
 public slots:
     void Expand();
-    ElementWidget* AddElement(QString text="");
+    ElementWidget* AddElement(const QString& text="");
     void MoveUpElement(ElementWidget* w);
     void MoveDownElement(ElementWidget* w);
     void FocusUpElement(ElementWidget* w);

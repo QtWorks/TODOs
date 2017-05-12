@@ -29,7 +29,7 @@ public:
     GroupHeaderWidget(QWidget *parent = 0);
     virtual ~GroupHeaderWidget();
     QString Title() const;
-    void SetTitle(QString _title);
+    void SetTitle(const QString& _title);
     HeaderWidget* GetHeaderWidget();
 
 signals:

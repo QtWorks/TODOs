@@ -15,7 +15,7 @@ protected:
     void focusOutEvent(QFocusEvent *event);
 
 public:
-    HeaderLine(QString text = "", QWidget *parent = 0);
+    HeaderLine(const QString& text = "", QWidget *parent = 0);
     virtual ~HeaderLine();
 
 signals:
@@ -30,7 +30,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
 
 public:
-    HeaderButton(QString text = "", QWidget *parent = 0);
+    HeaderButton(const QString& text = "", QWidget *parent = 0);
     virtual ~HeaderButton();
 
 signals:
@@ -47,9 +47,9 @@ private:
     HeaderLine* line;
 
 public:
-    HeaderWidget(QString text = "", QWidget *parent = 0);
+    HeaderWidget(const QString& text = "", QWidget *parent = 0);
     virtual ~HeaderWidget();
-    void SetText(QString text);
+    void SetText(const QString& text);
     QString Text() const;
 
 signals:
