@@ -71,6 +71,7 @@ QString GroupHeaderWidget::Title() const
 void GroupHeaderWidget::SetTitle(QString _title)
 {
     title->SetText(_title);
+    title->ShowButton();
 }
 
 void GroupHeaderWidget::mousePressEvent(QMouseEvent *event)
