@@ -7,7 +7,7 @@ ParametersDialog::ParametersDialog(QWidget *parent) : QDialog(parent)
     settings = new QSettings("xavi-b", qApp->applicationDisplayName(), this);
 
 #ifdef _WIN32
-    dataPath = "%APPDATA%\\"+qApp->applicationName()+"\\";
+    dataPath = QDir::homePath()+"\\AppData\\Roaming\\"+qApp->applicationName()+"\\";
 #elif __APPLE__
     dataPath = QDir::homePath()+"/Library/Preferences/"+qApp->applicationName()+"/";
 #else
