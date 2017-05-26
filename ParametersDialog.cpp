@@ -24,7 +24,7 @@ ParametersDialog::ParametersDialog(QWidget *parent) : QDialog(parent)
 
     defaultGroupColor = "rgba(127,0,0,50%)";
     defaultElementColor = "rgba(255,127,127,50%)";
-    defaultFontColor = "white";
+    defaultFontColor = "rgba(255,255,255,255)";
 
     startup = new QCheckBox(this);
     startup->setChecked(GetStartUpPolicy());
@@ -80,40 +80,52 @@ ParametersDialog::~ParametersDialog()
 
 QString ParametersDialog::ColorToRgba(const QColor& color) const
 {
-    return "rgba("+QString::number(color.red())+","+QString::number(color.green())+","+QString::number(color.blue())+","+QString::number(color.alpha())+");";
+    return "rgba("+QString::number(color.red())+","+QString::number(color.green())+","+QString::number(color.blue())+","+QString::number(color.alpha())+")";
 }
 
 QColor ParametersDialog::RgbaToColor(const QString& rgba) const
 {
     QStringList c = QString(rgba).replace("rgba(", "").replace(")", "").split(",");
-    return QColor(c[0].toInt(), c[1].toInt(), c[2].toInt(), (c.count()>3) ? c[3].toInt() : 0);
+    return QColor(c[0].toInt(), c[1].toInt(), c[2].toInt(), c[3].toInt());
 }
 
 void ParametersDialog::SetGroupColor()
 {
     QColor color = QColorDialog::getColor(RgbaToColor(GroupColor()), this, "Choose Group Color", QColorDialog::ShowAlphaChannel);
-    settings->setValue("GroupColor", ColorToRgba(color));
-    groupColor->setStyleSheet("background: "+ColorToRgba(color)+";");
 
-    emit ColorChanged();
+    if(color.isValid())
+    {
+        settings->setValue("GroupColor", ColorToRgba(color));
+        groupColor->setStyleSheet("background: "+ColorToRgba(color)+";");
+
+        emit ColorChanged();
+    }
 }
 
 void ParametersDialog::SetElementColor()
 {
     QColor color = QColorDialog::getColor(RgbaToColor(ElementColor()), this, "Choose Element Color", QColorDialog::ShowAlphaChannel);
-    settings->setValue("ElementColor", ColorToRgba(color));
-    elementColor->setStyleSheet("background: "+ColorToRgba(color)+";");
 
-    emit ColorChanged();
+    if(color.isValid())
+    {
+        settings->setValue("ElementColor", ColorToRgba(color));
+        elementColor->setStyleSheet("background: "+ColorToRgba(color)+";");
+
+        emit ColorChanged();
+    }
 }
 
 void ParametersDialog::SetFontColor()
 {
     QColor color = QColorDialog::getColor(RgbaToColor(FontColor()), this, "Choose Font Color", QColorDialog::ShowAlphaChannel);
-    settings->setValue("FontColor", ColorToRgba(color));
-    fontColor->setStyleSheet("background: "+ColorToRgba(color)+";");
 
-    emit ColorChanged();
+    if(color.isValid())
+    {
+        settings->setValue("FontColor", ColorToRgba(color));
+        fontColor->setStyleSheet("background: "+ColorToRgba(color)+";");
+
+        emit ColorChanged();
+    }
 }
 
 QString ParametersDialog::GroupColor() const
