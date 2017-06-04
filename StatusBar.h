@@ -9,8 +9,10 @@ class StatusBar : public QStatusBar
     Q_OBJECT
 
 private:
-    QPoint startPos;
-    bool moving;
+    Q_DISABLE_COPY(StatusBar)
+
+    QPoint _startPos;
+    bool _moving;
 
 protected:
     void mouseMoveEvent(QMouseEvent *event);

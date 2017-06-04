@@ -36,19 +36,19 @@ void HeaderButton::mousePressEvent(QMouseEvent *event)
 
 HeaderWidget::HeaderWidget(const QString& text, QWidget *parent) : QWidget(parent)
 {
-    button = new HeaderButton(text, this);
-    line = new HeaderLine(text, this);
-    line->setAlignment(Qt::AlignHCenter);
+    _button = new HeaderButton(text, this);
+    _line = new HeaderLine(text, this);
+    _line->setAlignment(Qt::AlignHCenter);
 
-    layout = new QStackedLayout;
-    layout->addWidget(button);
-    layout->addWidget(line);
-    setLayout(layout);
+    _layout = new QStackedLayout;
+    _layout->addWidget(_button);
+    _layout->addWidget(_line);
+    setLayout(_layout);
 
-    connect(line,   SIGNAL(returnPressed()),    this, SLOT(ShowButton()));
-    connect(line,   SIGNAL(FocusLost()),        this, SLOT(ShowButton()));
-    connect(button, SIGNAL(clicked(bool)),      this, SLOT(ClickButton(bool)));
-    connect(button, SIGNAL(MiddleClicked()),    this, SLOT(ShowLine()));
+    connect(_line,   SIGNAL(returnPressed()),    this, SLOT(ShowButton()));
+    connect(_line,   SIGNAL(FocusLost()),        this, SLOT(ShowButton()));
+    connect(_button, SIGNAL(clicked(bool)),      this, SLOT(ClickButton(bool)));
+    connect(_button, SIGNAL(MiddleClicked()),    this, SLOT(ShowLine()));
 }
 
 HeaderWidget::~HeaderWidget()
@@ -58,27 +58,27 @@ HeaderWidget::~HeaderWidget()
 
 void HeaderWidget::SetText(const QString& text)
 {
-    button->setText(text);
-    line->setText(text);
+    _button->setText(text);
+    _line->setText(text);
 }
 
 QString HeaderWidget::Text() const
 {
-    return button->text();
+    return _button->text();
 }
 
 void HeaderWidget::ShowButton()
 {
-    layout->setCurrentWidget(button);
-    button->setFocus();
-    button->setText(line->text());
+    _layout->setCurrentWidget(_button);
+    _button->setFocus();
+    _button->setText(_line->text());
 }
 
 void HeaderWidget::ShowLine()
 {
-    layout->setCurrentWidget(line);
-    line->setFocus();
-    line->setText(button->text());
+    _layout->setCurrentWidget(_line);
+    _line->setFocus();
+    _line->setText(_button->text());
 }
 
 void HeaderWidget::ClickButton(bool b)

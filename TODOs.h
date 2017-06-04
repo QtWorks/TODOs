@@ -8,6 +8,8 @@
 class TODOs : public QApplication
 {
 private:
+    Q_DISABLE_COPY(TODOs)
+
     MainWindow w;
 
 public:

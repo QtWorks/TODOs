@@ -14,11 +14,13 @@ class GroupHeaderWidget : public QWidget
     Q_OBJECT
 
 private:
-    HeaderWidget* title;
-    QPushButton* add;
-    QHBoxLayout* layout;
+    Q_DISABLE_COPY(GroupHeaderWidget)
 
-    QPoint startDragPos;
+    HeaderWidget* _title;
+    QPushButton* _add;
+    QHBoxLayout* _layout;
+
+    QPoint _startDragPos;
 
 protected:
     void mousePressEvent(QMouseEvent *event);
@@ -29,7 +31,7 @@ public:
     GroupHeaderWidget(QWidget *parent = 0);
     virtual ~GroupHeaderWidget();
     QString Title() const;
-    void SetTitle(const QString& _title);
+    void SetTitle(const QString& title);
     HeaderWidget* GetHeaderWidget();
 
 signals:

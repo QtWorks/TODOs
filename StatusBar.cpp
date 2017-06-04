@@ -1,6 +1,7 @@
 #include "StatusBar.h"
 
-StatusBar::StatusBar(QWidget *parent) : QStatusBar(parent), moving(false)
+StatusBar::StatusBar(QWidget *parent)
+    : QStatusBar(parent), _moving(false)
 {
 
 }
@@ -14,10 +15,10 @@ void StatusBar::mouseMoveEvent(QMouseEvent *event)
 {
     if(event->buttons() & Qt::LeftButton)
     {
-        if(moving)
+        if(_moving)
         {
             setCursor(Qt::ClosedHandCursor);
-            emit Moved(event->globalPos() - mapTo(parentWidget(), startPos));
+            emit Moved(event->globalPos() - mapTo(parentWidget(), _startPos));
         }
     }
 }
@@ -28,15 +29,15 @@ void StatusBar::mousePressEvent(QMouseEvent *event)
     {
         if(event->pos().x() < size().width() - size().height())
         {
-            startPos = event->pos();
-            moving = true;
+            _startPos = event->pos();
+            _moving = true;
         }
     }
 }
 
 void StatusBar::mouseReleaseEvent(QMouseEvent *event)
 {
-    moving  = false;
+    _moving  = false;
     setCursor(Qt::OpenHandCursor);
 }
 

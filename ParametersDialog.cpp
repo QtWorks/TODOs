@@ -4,73 +4,73 @@ ParametersDialog::ParametersDialog(QWidget *parent) : QDialog(parent)
 {
     setWindowTitle("Parameters");
 
-    settings = new QSettings("xavi-b", qApp->applicationDisplayName(), this);
+    _settings = new QSettings("xavi-b", qApp->applicationDisplayName(), this);
 
 #ifdef _WIN32
-    dataPath = QDir::homePath()+"\\AppData\\Roaming\\"+qApp->applicationName()+"\\";
+    _dataPath = QDir::homePath()+"\\AppData\\Roaming\\"+qApp->applicationName()+"\\";
 #elif __APPLE__
-    dataPath = QDir::homePath()+"/Library/Preferences/"+qApp->applicationName()+"/";
+    _dataPath = QDir::homePath()+"/Library/Preferences/"+qApp->applicationName()+"/";
 #else
-    dataPath = QDir::homePath()+"/."+qApp->applicationName()+"/";
+    _dataPath = QDir::homePath()+"/."+qApp->applicationName()+"/";
 #endif
 
 #ifdef _WIN32
-    startUpPath = "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
+    _startUpPath = "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
 #elif __APPLE__
-    startUpPath = QDir::homePath()+"/Library/LaunchAgents/";
+    _startUpPath = QDir::homePath()+"/Library/LaunchAgents/";
 #else
-    startUpPath = QDir::homePath()+"/.config/autostart/";
+    _startUpPath = QDir::homePath()+"/.config/autostart/";
 #endif
 
-    defaultGroupColor = "rgba(127,0,0,50%)";
-    defaultElementColor = "rgba(255,127,127,50%)";
-    defaultFontColor = "rgba(255,255,255,255)";
+    _defaultGroupColor = "rgba(127,0,0,50%)";
+    _defaultElementColor = "rgba(255,127,127,50%)";
+    _defaultFontColor = "rgba(255,255,255,255)";
 
-    startup = new QCheckBox(this);
-    startup->setChecked(GetStartUpPolicy());
-    startupContainer = new QWidget(this);
-    cLayout = new QHBoxLayout;
-    cLayout->setMargin(2);
-    cLayout->setSpacing(0);
-    cLayout->setAlignment(Qt::AlignCenter);
-    cLayout->addWidget(startup);
-    startupContainer->setLayout(cLayout);
+    _startup = new QCheckBox(this);
+    _startup->setChecked(GetStartUpPolicy());
+    _startupContainer = new QWidget(this);
+    _cLayout = new QHBoxLayout;
+    _cLayout->setMargin(2);
+    _cLayout->setSpacing(0);
+    _cLayout->setAlignment(Qt::AlignCenter);
+    _cLayout->addWidget(_startup);
+    _startupContainer->setLayout(_cLayout);
 
-    share = new QPushButton(QIcon::fromTheme("emblem-shared"), "", this);
-    share->setAutoDefault(false);
-    share->setFixedSize(30,30);
-    about = new QPushButton(QIcon::fromTheme("help-about"), "", this);
-    about->setAutoDefault(false);
-    about->setFixedSize(30,30);
-    groupColor = new QPushButton("", this);
-    groupColor->setAutoDefault(false);
-    groupColor->setFixedSize(30,30);
-    groupColor->setStyleSheet("background: "+GroupColor()+";");
-    elementColor = new QPushButton("", this);
-    elementColor->setAutoDefault(false);
-    elementColor->setFixedSize(30,30);
-    elementColor->setStyleSheet("background: "+ElementColor()+";");
-    fontColor = new QPushButton("", this);
-    fontColor->setAutoDefault(false);
-    fontColor->setFixedSize(30,30);
-    fontColor->setStyleSheet("background: "+FontColor()+";");
+    _share = new QPushButton(QIcon::fromTheme("emblem-shared"), "", this);
+    _share->setAutoDefault(false);
+    _share->setFixedSize(30,30);
+    _about = new QPushButton(QIcon::fromTheme("help-about"), "", this);
+    _about->setAutoDefault(false);
+    _about->setFixedSize(30,30);
+    _groupColor = new QPushButton("", this);
+    _groupColor->setAutoDefault(false);
+    _groupColor->setFixedSize(30,30);
+    _groupColor->setStyleSheet("background: "+GroupColor()+";");
+    _elementColor = new QPushButton("", this);
+    _elementColor->setAutoDefault(false);
+    _elementColor->setFixedSize(30,30);
+    _elementColor->setStyleSheet("background: "+ElementColor()+";");
+    _fontColor = new QPushButton("", this);
+    _fontColor->setAutoDefault(false);
+    _fontColor->setFixedSize(30,30);
+    _fontColor->setStyleSheet("background: "+FontColor()+";");
 
-    layout = new QFormLayout;
-    layout->addRow("Launch on start-up:", startupContainer);
-    layout->addRow("Group color:", groupColor);
-    layout->addRow("Element color:", elementColor);
-    layout->addRow("Font color:", fontColor);
-    layout->addRow("Connect your TODOs:", share);
-    layout->addRow("About:", about);
-    setLayout(layout);
+    _layout = new QFormLayout;
+    _layout->addRow("Launch on start-up:", _startupContainer);
+    _layout->addRow("Group color:", _groupColor);
+    _layout->addRow("Element color:", _elementColor);
+    _layout->addRow("Font color:", _fontColor);
+    _layout->addRow("Connect your TODOs:", _share);
+    _layout->addRow("About:", _about);
+    setLayout(_layout);
 
-    connect(share,          SIGNAL(clicked(bool)), this, SLOT(OpenShare()));
-    connect(startup,        SIGNAL(clicked(bool)), this, SLOT(SetStartUpPolicy(bool)));
-    connect(about,          SIGNAL(clicked(bool)), this, SLOT(OpenAbout()));
+    connect(_share,          SIGNAL(clicked(bool)), this, SLOT(OpenShare()));
+    connect(_startup,        SIGNAL(clicked(bool)), this, SLOT(SetStartUpPolicy(bool)));
+    connect(_about,          SIGNAL(clicked(bool)), this, SLOT(OpenAbout()));
 
-    connect(groupColor,     SIGNAL(clicked(bool)), this, SLOT(SetGroupColor()));
-    connect(elementColor,   SIGNAL(clicked(bool)), this, SLOT(SetElementColor()));
-    connect(fontColor,      SIGNAL(clicked(bool)), this, SLOT(SetFontColor()));
+    connect(_groupColor,     SIGNAL(clicked(bool)), this, SLOT(SetGroupColor()));
+    connect(_elementColor,   SIGNAL(clicked(bool)), this, SLOT(SetElementColor()));
+    connect(_fontColor,      SIGNAL(clicked(bool)), this, SLOT(SetFontColor()));
 }
 
 ParametersDialog::~ParametersDialog()
@@ -95,8 +95,8 @@ void ParametersDialog::SetGroupColor()
 
     if(color.isValid())
     {
-        settings->setValue("GroupColor", ColorToRgba(color));
-        groupColor->setStyleSheet("background: "+ColorToRgba(color)+";");
+        _settings->setValue("GroupColor", ColorToRgba(color));
+        _groupColor->setStyleSheet("background: "+ColorToRgba(color)+";");
 
         emit ColorChanged();
     }
@@ -108,8 +108,8 @@ void ParametersDialog::SetElementColor()
 
     if(color.isValid())
     {
-        settings->setValue("ElementColor", ColorToRgba(color));
-        elementColor->setStyleSheet("background: "+ColorToRgba(color)+";");
+        _settings->setValue("ElementColor", ColorToRgba(color));
+        _elementColor->setStyleSheet("background: "+ColorToRgba(color)+";");
 
         emit ColorChanged();
     }
@@ -121,8 +121,8 @@ void ParametersDialog::SetFontColor()
 
     if(color.isValid())
     {
-        settings->setValue("FontColor", ColorToRgba(color));
-        fontColor->setStyleSheet("background: "+ColorToRgba(color)+";");
+        _settings->setValue("FontColor", ColorToRgba(color));
+        _fontColor->setStyleSheet("background: "+ColorToRgba(color)+";");
 
         emit ColorChanged();
     }
@@ -130,17 +130,17 @@ void ParametersDialog::SetFontColor()
 
 QString ParametersDialog::GroupColor() const
 {
-    return settings->value("GroupColor", defaultGroupColor).toString();
+    return _settings->value("GroupColor", _defaultGroupColor).toString();
 }
 
 QString ParametersDialog::ElementColor() const
 {
-    return settings->value("ElementColor", defaultElementColor).toString();
+    return _settings->value("ElementColor", _defaultElementColor).toString();
 }
 
 QString ParametersDialog::FontColor() const
 {
-    return settings->value("FontColor", defaultFontColor).toString();
+    return _settings->value("FontColor", _defaultFontColor).toString();
 }
 
 void ParametersDialog::OpenDataFolder() const
@@ -173,9 +173,9 @@ void ParametersDialog::Open(const QString& str) const
 void ParametersDialog::SetStartUpPolicy(bool b)
 {
 #ifdef _WIN32
-    QSettings(startUpPath, QSettings::NativeFormat).setValue(qApp->applicationName(), b);
+    QSettings(_startUpPath, QSettings::NativeFormat).setValue(qApp->applicationName(), b);
 #elif __APPLE__
-    QFile f(startUpPath+qApp->applicationName()+".plist");
+    QFile f(_startUpPath+qApp->applicationName()+".plist");
 
     if(b)
     {
@@ -200,7 +200,7 @@ void ParametersDialog::SetStartUpPolicy(bool b)
         f.remove();
     }
 #else
-    QFile f(startUpPath+qApp->applicationName()+".desktop");
+    QFile f(_startUpPath+qApp->applicationName()+".desktop");
 
     if(b)
     {
@@ -221,25 +221,25 @@ void ParametersDialog::SetStartUpPolicy(bool b)
 bool ParametersDialog::GetStartUpPolicy() const
 {
 #ifdef _WIN32
-    return QSettings(startUpPath, QSettings::NativeFormat).value(qApp->applicationName(), false).toBool();
+    return QSettings(_startUpPath, QSettings::NativeFormat).value(qApp->applicationName(), false).toBool();
 #elif __APPLE__
-    return QFile(startUpPath+qApp->applicationName()+".plist").exists();
+    return QFile(_startUpPath+qApp->applicationName()+".plist").exists();
 #else
-    return QFile(startUpPath+qApp->applicationName()+".desktop").exists();
+    return QFile(_startUpPath+qApp->applicationName()+".desktop").exists();
 #endif
 }
 
 const QString ParametersDialog::DataPath() const
 {
-    if(!QDir().exists(dataPath))
-        QDir().mkdir(dataPath);
+    if(!QDir().exists(_dataPath))
+        QDir().mkdir(_dataPath);
 
-    return dataPath;
+    return _dataPath;
 }
 
 QSettings* ParametersDialog::Settings() const
 {
-    return settings;
+    return _settings;
 }
 
 const QString ParametersDialog::Stylesheet() const

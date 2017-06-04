@@ -11,6 +11,9 @@ class HeaderLine : public QLineEdit
 {
     Q_OBJECT
 
+private:
+    Q_DISABLE_COPY(HeaderLine)
+
 protected:
     void focusOutEvent(QFocusEvent *event);
 
@@ -25,6 +28,9 @@ signals:
 class HeaderButton : public QPushButton
 {
     Q_OBJECT
+
+private:
+    Q_DISABLE_COPY(HeaderButton)
 
 protected:
     void mousePressEvent(QMouseEvent *event);
@@ -42,9 +48,11 @@ class HeaderWidget : public QWidget
     Q_OBJECT
 
 private:
-    QStackedLayout* layout;
-    HeaderButton* button;
-    HeaderLine* line;
+    Q_DISABLE_COPY(HeaderWidget)
+
+    QStackedLayout* _layout;
+    HeaderButton* _button;
+    HeaderLine* _line;
 
 public:
     HeaderWidget(const QString& text = "", QWidget *parent = 0);

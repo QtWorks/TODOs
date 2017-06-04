@@ -8,33 +8,33 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setAttribute(Qt::WA_QuitOnClose, true);
     setMinimumSize(300, 100);
 
-    menu = new MenuToolBar(this);
-    addToolBar(Qt::LeftToolBarArea, menu);
+    _menu = new MenuToolBar(this);
+    addToolBar(Qt::LeftToolBarArea, _menu);
 
-    layout = new QVBoxLayout;
-    layout->setContentsMargins(4,0,4,0);
-    layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+    _layout = new QVBoxLayout;
+    _layout->setContentsMargins(4,0,4,0);
+    _layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 
-    scroll = new QScrollArea(this);
-    container = new QWidget(this);
-    container->setLayout(layout);
-    scroll->setWidget(container);
-    scroll->setWidgetResizable(true);
-    scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    setCentralWidget(scroll);
+    _scroll = new QScrollArea(this);
+    _container = new QWidget(this);
+    _container->setLayout(_layout);
+    _scroll->setWidget(_container);
+    _scroll->setWidgetResizable(true);
+    _scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    setCentralWidget(_scroll);
 
-    statusBar = new StatusBar(this);
-    statusBar->setSizeGripEnabled(true);
-    setStatusBar(statusBar);
+    _statusBar = new StatusBar(this);
+    _statusBar->setSizeGripEnabled(true);
+    setStatusBar(_statusBar);
 
-    parameters = new ParametersDialog(this);
+    _parameters = new ParametersDialog(this);
 
-    connect(menu, SIGNAL(AddPressed()),         this,       SLOT(AddGroupWidget()));
-    connect(menu, SIGNAL(ParametersPressed()),  parameters, SLOT(open()));
+    connect(_menu, SIGNAL(AddPressed()),         this,       SLOT(AddGroupWidget()));
+    connect(_menu, SIGNAL(ParametersPressed()),  _parameters, SLOT(open()));
 
-    connect(statusBar, SIGNAL(Moved(QPoint)), this, SLOT(Move(QPoint)));
+    connect(_statusBar, SIGNAL(Moved(QPoint)),   this, SLOT(Move(QPoint)));
 
-    connect(parameters, SIGNAL(ColorChanged()), this, SLOT(LoadStyleSheet()));
+    connect(_parameters, SIGNAL(ColorChanged()), this, SLOT(LoadStyleSheet()));
 
     ReadData();
     ReadSettings();
@@ -49,7 +49,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::LoadStyleSheet()
 {
-    setStyleSheet(parameters->Stylesheet());
+    setStyleSheet(_parameters->Stylesheet());
 }
 
 void MainWindow::Move(const QPoint v)
@@ -60,14 +60,14 @@ void MainWindow::Move(const QPoint v)
 void MainWindow::ShowElement(QWidget* w)
 {
     qApp->processEvents();
-    scroll->ensureWidgetVisible(w);
+    _scroll->ensureWidgetVisible(w);
 }
 
 GroupWidget* MainWindow::AddGroupWidget()
 {
     GroupWidget* group = new GroupWidget(this);
     connect(group, SIGNAL(EnsureElementIsVisible(QWidget*)), this, SLOT(ShowElement(QWidget*)));
-    layout->addWidget(group);
+    _layout->addWidget(group);
     group->GetGroupHeaderWidget()->GetHeaderWidget()->ShowLine();
     ShowElement(group);
     return group;
@@ -75,7 +75,7 @@ GroupWidget* MainWindow::AddGroupWidget()
 
 void MainWindow::ReadData()
 {
-    QFile file(parameters->DataPath()+"list.json");
+    QFile file(_parameters->DataPath()+"list.json");
 
     if(file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -104,23 +104,23 @@ void MainWindow::ReadData()
     else
     {
         qWarning("Can't read saved Todos");
-        qWarning((parameters->DataPath()+"list.json").toStdString().c_str());
+        qWarning((_parameters->DataPath()+"list.json").toStdString().c_str());
     }
 }
 
 void MainWindow::WriteData()
 {
-    QFile file(parameters->DataPath()+"list.json");
+    QFile file(_parameters->DataPath()+"list.json");
 
     if(file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QJsonObject root;
         QJsonArray groups;
 
-        for(int i=0; i<layout->count(); i++)
+        for(int i=0; i<_layout->count(); i++)
         {
             QLayoutItem* item;
-            if((item = layout->itemAt(i)) != NULL)
+            if((item = _layout->itemAt(i)) != NULL)
             {
                 QJsonObject groupObject;
                 QJsonArray elements;
@@ -151,17 +151,17 @@ void MainWindow::WriteData()
     else
     {
         qWarning("Can't write saved Todos");
-        qWarning((parameters->DataPath()+"list.json").toStdString().c_str());
+        qWarning((_parameters->DataPath()+"list.json").toStdString().c_str());
     }
 }
 
 void MainWindow::ReadSettings()
 {
     setMinimumSize(250, 250);
-    restoreGeometry(parameters->Settings()->value("MainWindow/Geometry", saveGeometry()).toByteArray());
+    restoreGeometry(_parameters->Settings()->value("MainWindow/Geometry", saveGeometry()).toByteArray());
 }
 
 void MainWindow::WriteSettings()
 {
-    parameters->Settings()->setValue("MainWindow/Geometry", saveGeometry());
+    _parameters->Settings()->setValue("MainWindow/Geometry", saveGeometry());
 }

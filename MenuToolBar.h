@@ -13,9 +13,11 @@ class MenuToolBar : public QToolBar
     Q_OBJECT
 
 private:
-    QAction* add;
-    QAction* parameters;
-    QAction* quit;
+    Q_DISABLE_COPY(MenuToolBar)
+
+    QAction* _add;
+    QAction* _parameters;
+    QAction* _quit;
 
 public:
     MenuToolBar(QWidget *parent = 0);

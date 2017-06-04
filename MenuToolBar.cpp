@@ -4,21 +4,21 @@ MenuToolBar::MenuToolBar(QWidget *parent) : QToolBar(parent)
 {
     setMovable(false);
 
-    add = addAction(QIcon(":/images/add"), "AddButton");
-    parameters = addAction(QIcon(":/images/params"), "SettingsButton");
-    quit = addAction(QIcon(":/images/quit"), "QuitButton");
+    _add = addAction(QIcon(":/images/add"), "AddButton");
+    _parameters = addAction(QIcon(":/images/params"), "SettingsButton");
+    _quit = addAction(QIcon(":/images/quit"), "QuitButton");
 
-    widgetForAction(add)->setFixedSize(30, 30);
-    widgetForAction(parameters)->setFixedSize(30, 30);
-    widgetForAction(quit)->setFixedSize(30, 30);
+    widgetForAction(_add)->setFixedSize(30, 30);
+    widgetForAction(_parameters)->setFixedSize(30, 30);
+    widgetForAction(_quit)->setFixedSize(30, 30);
 
-    (static_cast<QToolButton*>(widgetForAction(add)))->setAutoRaise(false);
-    (static_cast<QToolButton*>(widgetForAction(parameters)))->setAutoRaise(false);
-    (static_cast<QToolButton*>(widgetForAction(quit)))->setAutoRaise(false);
+    (static_cast<QToolButton*>(widgetForAction(_add)))->setAutoRaise(false);
+    (static_cast<QToolButton*>(widgetForAction(_parameters)))->setAutoRaise(false);
+    (static_cast<QToolButton*>(widgetForAction(_quit)))->setAutoRaise(false);
 
-    connect(add,        SIGNAL(triggered(bool)), this, SLOT(PressAdd()));
-    connect(parameters, SIGNAL(triggered(bool)), this, SLOT(PressParameters()));
-    connect(quit,       SIGNAL(triggered(bool)), qApp, SLOT(closeAllWindows()));
+    connect(_add,        SIGNAL(triggered(bool)), this, SLOT(PressAdd()));
+    connect(_parameters, SIGNAL(triggered(bool)), this, SLOT(PressParameters()));
+    connect(_quit,       SIGNAL(triggered(bool)), qApp, SLOT(closeAllWindows()));
 }
 
 MenuToolBar::~MenuToolBar()

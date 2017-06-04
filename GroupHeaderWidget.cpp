@@ -2,25 +2,25 @@
 
 GroupHeaderWidget::GroupHeaderWidget(QWidget *parent) : QWidget(parent)
 {
-    title = new HeaderWidget("Group", this);
-    title->setFixedHeight(20);
-    title->setContextMenuPolicy(Qt::CustomContextMenu);
+    _title = new HeaderWidget("Group", this);
+    _title->setFixedHeight(20);
+    _title->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    add = new QPushButton(QIcon(":/images/add"), "", this);
-    add->setFixedSize(20,20);
+    _add = new QPushButton(QIcon(":/images/add"), "", this);
+    _add->setFixedSize(20,20);
 
-    layout = new QHBoxLayout;
-    layout->setContentsMargins(0,0,0,0);
-    layout->setSpacing(0);
-    layout->addWidget(title);
-    layout->addWidget(add);
-    layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
-    setLayout(layout);
+    _layout = new QHBoxLayout;
+    _layout->setContentsMargins(0,0,0,0);
+    _layout->setSpacing(0);
+    _layout->addWidget(_title);
+    _layout->addWidget(_add);
+    _layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+    setLayout(_layout);
 
-    connect(title,  SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowContextMenu(const QPoint&)));
+    connect(_title,  SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowContextMenu(const QPoint&)));
 
-    connect(title,  SIGNAL(clicked(bool)), this, SLOT(PressExpand()));
-    connect(add,    SIGNAL(clicked(bool)), this, SLOT(PressAdd()));
+    connect(_title,  SIGNAL(clicked(bool)), this, SLOT(PressExpand()));
+    connect(_add,    SIGNAL(clicked(bool)), this, SLOT(PressAdd()));
 }
 
 GroupHeaderWidget::~GroupHeaderWidget()
@@ -60,25 +60,25 @@ void GroupHeaderWidget::ShowContextMenu(const QPoint& position)
     connect(&deleteAllA,    SIGNAL(triggered()), this, SLOT(TriggerDeleteAll()));
     connect(&deleteA,       SIGNAL(triggered()), this, SLOT(TriggerDelete()));
 
-    contextMenu.exec(title->mapToGlobal(position));
+    contextMenu.exec(_title->mapToGlobal(position));
 }
 
 QString GroupHeaderWidget::Title() const
 {
-    return title->Text();
+    return _title->Text();
 }
 
-void GroupHeaderWidget::SetTitle(const QString& _title)
+void GroupHeaderWidget::SetTitle(const QString& title)
 {
-    title->SetText(_title);
-    title->ShowButton();
+    _title->SetText(title);
+    _title->ShowButton();
 }
 
 void GroupHeaderWidget::mousePressEvent(QMouseEvent *event)
 {
     if(event->buttons() & Qt::LeftButton)
     {
-        startDragPos = event->globalPos();
+        _startDragPos = event->globalPos();
     }
 }
 
@@ -87,20 +87,20 @@ void GroupHeaderWidget::mouseMoveEvent(QMouseEvent *event)
     if(event->buttons() & Qt::LeftButton)
     {
         setCursor(Qt::ClosedHandCursor);
-        emit GroupMoving(event->globalPos()-startDragPos);
+        emit GroupMoving(event->globalPos()-_startDragPos);
     }
 }
 
 void GroupHeaderWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-    if(event->globalPos() != startDragPos)
+    if(event->globalPos() != _startDragPos)
     {
         setCursor(Qt::ArrowCursor);
-        emit GroupMoved(event->globalPos()-startDragPos);
+        emit GroupMoved(event->globalPos()-_startDragPos);
     }
 }
 
 HeaderWidget* GroupHeaderWidget::GetHeaderWidget()
 {
-    return title;
+    return _title;
 }

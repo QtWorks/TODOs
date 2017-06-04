@@ -22,13 +22,15 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    QVBoxLayout* layout;
-    QScrollArea* scroll;
-    QWidget* container;
-    MenuToolBar* menu;
-    StatusBar* statusBar;
+    Q_DISABLE_COPY(MainWindow)
 
-    ParametersDialog* parameters;
+    QVBoxLayout* _layout;
+    QScrollArea* _scroll;
+    QWidget* _container;
+    MenuToolBar* _menu;
+    StatusBar* _statusBar;
+
+    ParametersDialog* _parameters;
 
 public:
     MainWindow(QWidget *parent = 0);

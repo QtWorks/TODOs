@@ -13,12 +13,14 @@ class GroupWidget : public QWidget
     Q_OBJECT
 
 private:
-    QVBoxLayout* layout;
-    QVBoxLayout* cLayout;
-    GroupHeaderWidget* header;
-    QWidget* container;
+    Q_DISABLE_COPY(GroupWidget)
 
-    bool isExpanded;
+    QVBoxLayout* _layout;
+    QVBoxLayout* _cLayout;
+    GroupHeaderWidget* _header;
+    QWidget* _container;
+
+    bool _isExpanded;
 
 public:
     GroupWidget(QWidget *parent = 0);
@@ -26,7 +28,7 @@ public:
     int Count() const;
     ElementWidget* GetElement(int i);
     QString Title() const;
-    void SetTitle(const QString& _title);
+    void SetTitle(const QString& title);
     bool IsExpanded() const;
     GroupHeaderWidget* GetGroupHeaderWidget();
 

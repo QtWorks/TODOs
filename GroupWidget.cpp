@@ -1,35 +1,35 @@
 #include "GroupWidget.h"
 
-GroupWidget::GroupWidget(QWidget *parent) : QWidget(parent), isExpanded(true)
+GroupWidget::GroupWidget(QWidget *parent) : QWidget(parent), _isExpanded(true)
 {
     setMinimumHeight(20+2);
     setFixedHeight(20+2);
 
-    header = new GroupHeaderWidget(this);
-    header->setFixedHeight(20);
+    _header = new GroupHeaderWidget(this);
+    _header->setFixedHeight(20);
 
-    container = new QWidget(this);
+    _container = new QWidget(this);
 
-    cLayout = new QVBoxLayout;
-    cLayout->setContentsMargins(0,0,0,0);
-    cLayout->setSpacing(0);
-    container->setLayout(cLayout);
-    container->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+    _cLayout = new QVBoxLayout;
+    _cLayout->setContentsMargins(0,0,0,0);
+    _cLayout->setSpacing(0);
+    _container->setLayout(_cLayout);
+    _container->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 
-    layout = new QVBoxLayout;
-    layout->setContentsMargins(0,0,0,0);
-    layout->setSpacing(0);
-    layout->addWidget(header);
-    layout->addWidget(container);
-    layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
-    setLayout(layout);
+    _layout = new QVBoxLayout;
+    _layout->setContentsMargins(0,0,0,0);
+    _layout->setSpacing(0);
+    _layout->addWidget(_header);
+    _layout->addWidget(_container);
+    _layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+    setLayout(_layout);
 
-    connect(header, SIGNAL(ExpandPressed()),        this, SLOT(Expand()));
-    connect(header, SIGNAL(AddPressed()),           this, SLOT(AddElement()));
-    connect(header, SIGNAL(DeleteAllTriggered()),   this, SLOT(DeleteAllElements()));
-    connect(header, SIGNAL(DeleteTriggered()),      this, SLOT(deleteLater()));
+    connect(_header, SIGNAL(ExpandPressed()),        this, SLOT(Expand()));
+    connect(_header, SIGNAL(AddPressed()),           this, SLOT(AddElement()));
+    connect(_header, SIGNAL(DeleteAllTriggered()),   this, SLOT(DeleteAllElements()));
+    connect(_header, SIGNAL(DeleteTriggered()),      this, SLOT(deleteLater()));
 
-    connect(header, SIGNAL(GroupMoved(QPoint)),     this, SLOT(MoveInLayout(QPoint)));
+    connect(_header, SIGNAL(GroupMoved(QPoint)),     this, SLOT(MoveInLayout(QPoint)));
 }
 
 GroupWidget::~GroupWidget()
@@ -39,26 +39,26 @@ GroupWidget::~GroupWidget()
 
 bool GroupWidget::IsExpanded() const
 {
-    return isExpanded;
+    return _isExpanded;
 }
 
 void GroupWidget::Expand()
 {
-    isExpanded = !isExpanded;
+    _isExpanded = !_isExpanded;
 
-    if(isExpanded)
-        container->show();
+    if(_isExpanded)
+        _container->show();
     else
-        container->hide();
+        _container->hide();
 }
 
 ElementWidget* GroupWidget::AddElement(const QString& text)
 {
-    if(!isExpanded)
+    if(!_isExpanded)
         Expand();
 
     ElementWidget* element = new ElementWidget(text);
-    cLayout->addWidget(element);
+    _cLayout->addWidget(element);
     connect(element, SIGNAL(AddShortcuted()),           this, SLOT(AddElement()));
     connect(element, SIGNAL(MoveUp(ElementWidget*)),    this, SLOT(MoveUpElement(ElementWidget*)));
     connect(element, SIGNAL(MoveDown(ElementWidget*)),  this, SLOT(MoveDownElement(ElementWidget*)));
@@ -74,31 +74,31 @@ ElementWidget* GroupWidget::AddElement(const QString& text)
 
 void GroupWidget::MoveUpElement(ElementWidget* w)
 {
-    int index = cLayout->indexOf(w);
+    int index = _cLayout->indexOf(w);
 
     if(index > 0)
     {
-        cLayout->removeWidget(w);
-        cLayout->insertWidget(index-1, w);
+        _cLayout->removeWidget(w);
+        _cLayout->insertWidget(index-1, w);
         emit EnsureElementIsVisible(w);
     }
 }
 
 void GroupWidget::MoveDownElement(ElementWidget* w)
 {
-    int index = cLayout->indexOf(w);
+    int index = _cLayout->indexOf(w);
 
     if(index > -1 && index < Count()-1)
     {
-        cLayout->removeWidget(w);
-        cLayout->insertWidget(index+1, w);
+        _cLayout->removeWidget(w);
+        _cLayout->insertWidget(index+1, w);
         emit EnsureElementIsVisible(w);
     }
 }
 
 void GroupWidget::FocusUpElement(ElementWidget* w)
 {
-    int index = cLayout->indexOf(w);
+    int index = _cLayout->indexOf(w);
 
     if(index > 0)
     {
@@ -109,7 +109,7 @@ void GroupWidget::FocusUpElement(ElementWidget* w)
 
 void GroupWidget::FocusDownElement(ElementWidget* w)
 {
-    int index = cLayout->indexOf(w);
+    int index = _cLayout->indexOf(w);
 
     if(index > -1 && index < Count()-1)
     {
@@ -122,19 +122,19 @@ void GroupWidget::DeleteAllElements()
 {
     QLayoutItem* item;
 
-    while((item = cLayout->itemAt(0)) != NULL)
+    while((item = _cLayout->itemAt(0)) != NULL)
         delete item->widget();
 }
 
 int GroupWidget::Count() const
 {
-    return cLayout->count();
+    return _cLayout->count();
 }
 
 ElementWidget* GroupWidget::GetElement(int i)
 {
     QLayoutItem* item;
-    if((item = cLayout->itemAt(i)) != NULL)
+    if((item = _cLayout->itemAt(i)) != NULL)
         return static_cast<ElementWidget*>(item->widget());
     else
         return NULL;
@@ -142,12 +142,12 @@ ElementWidget* GroupWidget::GetElement(int i)
 
 QString GroupWidget::Title() const
 {
-    return header->Title();
+    return _header->Title();
 }
 
-void GroupWidget::SetTitle(const QString& _title)
+void GroupWidget::SetTitle(const QString& title)
 {
-    header->SetTitle(_title);
+    _header->SetTitle(title);
 }
 
 void GroupWidget::MoveInLayout(QPoint v)
@@ -171,5 +171,5 @@ void GroupWidget::MoveInLayout(QPoint v)
 
 GroupHeaderWidget* GroupWidget::GetGroupHeaderWidget()
 {
-    return header;
+    return _header;
 }

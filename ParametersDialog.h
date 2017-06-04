@@ -15,23 +15,26 @@
 class ParametersDialog : public QDialog
 {
     Q_OBJECT
-private:
-    QFormLayout* layout;
-    QCheckBox* startup;
-    QPushButton* share;
-    QPushButton* about;
-    QPushButton* groupColor;
-    QPushButton* elementColor;
-    QPushButton* fontColor;
-    QWidget* startupContainer;
-    QHBoxLayout *cLayout;
-    QSettings* settings;
 
-    QString dataPath;
-    QString startUpPath;
-    QString defaultGroupColor;
-    QString defaultElementColor;
-    QString defaultFontColor;
+private:
+    Q_DISABLE_COPY(ParametersDialog)
+
+    QFormLayout* _layout;
+    QCheckBox* _startup;
+    QPushButton* _share;
+    QPushButton* _about;
+    QPushButton* _groupColor;
+    QPushButton* _elementColor;
+    QPushButton* _fontColor;
+    QWidget* _startupContainer;
+    QHBoxLayout *_cLayout;
+    QSettings* _settings;
+
+    QString _dataPath;
+    QString _startUpPath;
+    QString _defaultGroupColor;
+    QString _defaultElementColor;
+    QString _defaultFontColor;
 
 public:
     ParametersDialog(QWidget* parent = 0);

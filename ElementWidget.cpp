@@ -31,28 +31,28 @@ void ElementText::insertFromMimeData(const QMimeData* source)
     insertPlainText(source->text());
 }
 
-ElementWidget::ElementWidget(const QString& _text, QWidget *parent) : QFrame(parent)
+ElementWidget::ElementWidget(const QString& text, QWidget *parent) : QFrame(parent)
 {
     setMinimumHeight(20);
 
-    text = new ElementText(_text, this);
-    text->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    text->setTabChangesFocus(true);
+    _text = new ElementText(text, this);
+    _text->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    _text->setTabChangesFocus(true);
     //text->setFocusPolicy(Qt::StrongFocus);
 
-    remove = new QPushButton(QIcon(":/images/delete"), "", this);
-    remove->setFixedSize(20,20);
+    _remove = new QPushButton(QIcon(":/images/delete"), "", this);
+    _remove->setFixedSize(20,20);
 
-    layout = new QHBoxLayout;
-    layout->setContentsMargins(0,0,0,0);
-    layout->setSpacing(0);
-    layout->addWidget(text, 0, Qt::AlignTop);
-    layout->addWidget(remove, 0, Qt::AlignTop);
-    layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
-    setLayout(layout);
+    _layout = new QHBoxLayout;
+    _layout->setContentsMargins(0,0,0,0);
+    _layout->setSpacing(0);
+    _layout->addWidget(_text, 0, Qt::AlignTop);
+    _layout->addWidget(_remove, 0, Qt::AlignTop);
+    _layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+    setLayout(_layout);
 
-    connect(remove, SIGNAL(clicked(bool)), this, SLOT(deleteLater()));
-    connect(text,   SIGNAL(textChanged()), this, SLOT(ResizeTextEdit()));
+    connect(_remove, SIGNAL(clicked(bool)), this, SLOT(deleteLater()));
+    connect(_text,   SIGNAL(textChanged()), this, SLOT(ResizeTextEdit()));
 
     ResizeTextEdit();
 }
@@ -64,29 +64,29 @@ ElementWidget::~ElementWidget()
 
 void ElementWidget::ResizeTextEdit()
 {
-    int height = text->document()->size().height();
+    int height = _text->document()->size().height();
 
-    if(height < text->document()->defaultFont().pixelSize()+2)
-        height = text->document()->defaultFont().pixelSize()+2;
+    if(height < _text->document()->defaultFont().pixelSize()+2)
+        height = _text->document()->defaultFont().pixelSize()+2;
 
-    text->setFixedHeight(height);
+    _text->setFixedHeight(height);
     setFixedHeight(height);
 }
 
 QString ElementWidget::Text() const
 {
-    return text->toPlainText();
+    return _text->toPlainText();
 }
 
-void ElementWidget::SetText(const QString& _text)
+void ElementWidget::SetText(const QString& text)
 {
-    text->setPlainText(_text);
+    _text->setPlainText(text);
     ResizeTextEdit();
 }
 
 void ElementWidget::SetFocus()
 {
-    text->setFocus();
+    _text->setFocus();
 }
 
 void ElementWidget::showEvent(QShowEvent *event)
@@ -124,6 +124,6 @@ void ElementWidget::keyPressEvent(QKeyEvent *event)
 
     if(event->key() == Qt::Key_Escape)
     {
-        text->clearFocus();
+        _text->clearFocus();
     }
 }

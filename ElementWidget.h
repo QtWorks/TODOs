@@ -12,6 +12,9 @@ class ElementText : public QTextEdit
 {
     Q_OBJECT
 
+private:
+    Q_DISABLE_COPY(ElementText)
+
 protected:
     void focusOutEvent(QFocusEvent *event);
     void insertFromMimeData(const QMimeData* source);
@@ -29,19 +32,21 @@ class ElementWidget : public QFrame
     Q_OBJECT
 
 private:
-    QHBoxLayout* layout;
-    ElementText* text;
-    QPushButton* remove;
+    Q_DISABLE_COPY(ElementWidget)
+
+    QHBoxLayout* _layout;
+    ElementText* _text;
+    QPushButton* _remove;
 
 protected:
     void showEvent(QShowEvent *event);
     void keyPressEvent(QKeyEvent *event);
 
 public:
-    ElementWidget(const QString& _text = "", QWidget *parent = 0);
+    ElementWidget(const QString& text = "", QWidget *parent = 0);
     virtual ~ElementWidget();
     QString Text() const;
-    void SetText(const QString& _text);
+    void SetText(const QString& text);
     void SetFocus();
 
 signals:
