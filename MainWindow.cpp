@@ -29,17 +29,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     _parameters = new ParametersDialog(this);
 
-    connect(_menu, SIGNAL(AddPressed()),         this,       SLOT(AddGroupWidget()));
-    connect(_menu, SIGNAL(ParametersPressed()),  _parameters, SLOT(open()));
+    connect(_menu, SIGNAL(addPressed()),         this,          SLOT(addGroupWidget()));
+    connect(_menu, SIGNAL(parametersPressed()),  _parameters,   SLOT(open()));
 
-    connect(_statusBar, SIGNAL(Moved(QPoint)),   this, SLOT(Move(QPoint)));
+    connect(_statusBar, SIGNAL(moved(QPoint)),   this, SLOT(move(QPoint)));
 
-    connect(_parameters, SIGNAL(ColorChanged()), this, SLOT(LoadStyleSheet()));
+    connect(_parameters, SIGNAL(colorChanged()), this, SLOT(loadStyleSheet()));
 
-    ReadData();
-    ReadSettings();
+    readData();
+    readSettings();
 
-    LoadStyleSheet();
+    loadStyleSheet();
 }
 
 MainWindow::~MainWindow()
@@ -47,35 +47,35 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::LoadStyleSheet()
+void MainWindow::loadStyleSheet()
 {
-    setStyleSheet(_parameters->Stylesheet());
+    setStyleSheet(_parameters->stylesheet());
 }
 
-void MainWindow::Move(const QPoint v)
+void MainWindow::move(const QPoint v)
 {
     move(v);
 }
 
-void MainWindow::ShowElement(QWidget* w)
+void MainWindow::showElement(QWidget* w)
 {
     qApp->processEvents();
     _scroll->ensureWidgetVisible(w);
 }
 
-GroupWidget* MainWindow::AddGroupWidget()
+GroupWidget* MainWindow::addGroupWidget()
 {
     GroupWidget* group = new GroupWidget(this);
-    connect(group, SIGNAL(EnsureElementIsVisible(QWidget*)), this, SLOT(ShowElement(QWidget*)));
+    connect(group, SIGNAL(ensureElementIsVisible(QWidget*)), this, SLOT(showElement(QWidget*)));
     _layout->addWidget(group);
-    group->GetGroupHeaderWidget()->GetHeaderWidget()->ShowLine();
-    ShowElement(group);
+    group->getGroupHeaderWidget()->getHeaderWidget()->showLine();
+    showElement(group);
     return group;
 }
 
-void MainWindow::ReadData()
+void MainWindow::readData()
 {
-    QFile file(_parameters->DataPath()+"list.json");
+    QFile file(_parameters->dataPath()+"list.json");
 
     if(file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -87,30 +87,30 @@ void MainWindow::ReadData()
 
         for(int i=0; i<groups.size(); i++)
         {
-            GroupWidget* group = AddGroupWidget();
-            group->SetTitle(groups[i].toObject()["title"].toString());
+            GroupWidget* group = addGroupWidget();
+            group->setTitle(groups[i].toObject()["title"].toString());
 
             QJsonArray elements = groups[i].toObject()["elements"].toArray();
             for(int j=0; j<elements.size(); j++)
             {
-                ElementWidget* element = group->AddElement();
-                element->SetText(elements[j].toObject()["text"].toString());
+                ElementWidget* element = group->addElement();
+                element->setText(elements[j].toObject()["text"].toString());
             }
 
             if(!groups[i].toObject()["expanded"].toBool())
-                group->Expand();
+                group->expand();
         }
     }
     else
     {
         qWarning("Can't read saved Todos");
-        qWarning((_parameters->DataPath()+"list.json").toStdString().c_str());
+        qWarning((_parameters->dataPath()+"list.json").toStdString().c_str());
     }
 }
 
-void MainWindow::WriteData()
+void MainWindow::writeData()
 {
-    QFile file(_parameters->DataPath()+"list.json");
+    QFile file(_parameters->dataPath()+"list.json");
 
     if(file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
@@ -126,13 +126,13 @@ void MainWindow::WriteData()
                 QJsonArray elements;
 
                 GroupWidget* group = static_cast<GroupWidget*>(item->widget());
-                groupObject["title"] = group->Title();
-                groupObject["expanded"] = group->IsExpanded();
+                groupObject["title"] = group->title();
+                groupObject["expanded"] = group->isExpanded();
 
-                for(int j=0; j<group->Count(); j++)
+                for(int j=0; j<group->count(); j++)
                 {
                     QJsonObject elementObject;
-                    elementObject["text"] = group->GetElement(j)->Text();
+                    elementObject["text"] = group->getElement(j)->text();
                     elements.append(elementObject);
                 }
 
@@ -151,17 +151,17 @@ void MainWindow::WriteData()
     else
     {
         qWarning("Can't write saved Todos");
-        qWarning((_parameters->DataPath()+"list.json").toStdString().c_str());
+        qWarning((_parameters->dataPath()+"list.json").toStdString().c_str());
     }
 }
 
-void MainWindow::ReadSettings()
+void MainWindow::readSettings()
 {
     setMinimumSize(250, 250);
-    restoreGeometry(_parameters->Settings()->value("MainWindow/Geometry", saveGeometry()).toByteArray());
+    restoreGeometry(_parameters->settings()->value("MainWindow/Geometry", saveGeometry()).toByteArray());
 }
 
-void MainWindow::WriteSettings()
+void MainWindow::writeSettings()
 {
-    _parameters->Settings()->setValue("MainWindow/Geometry", saveGeometry());
+    _parameters->settings()->setValue("MainWindow/Geometry", saveGeometry());
 }

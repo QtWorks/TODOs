@@ -18,7 +18,7 @@ void StatusBar::mouseMoveEvent(QMouseEvent *event)
         if(_moving)
         {
             setCursor(Qt::ClosedHandCursor);
-            emit Moved(event->globalPos() - mapTo(parentWidget(), _startPos));
+            emit moved(event->globalPos() - mapTo(parentWidget(), _startPos));
         }
     }
 }

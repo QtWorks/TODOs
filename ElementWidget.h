@@ -20,11 +20,11 @@ protected:
     void insertFromMimeData(const QMimeData* source);
 
 public:
-    ElementText(const QString& text = "", QWidget *parent = 0);
+    ElementText(const QString& text = "", QWidget *parent = nullptr);
     virtual ~ElementText();
 
 signals:
-    void FocusLost();
+    void focusLost();
 };
 
 class ElementWidget : public QFrame
@@ -43,21 +43,21 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 public:
-    ElementWidget(const QString& text = "", QWidget *parent = 0);
+    ElementWidget(const QString& text = "", QWidget *parent = nullptr);
     virtual ~ElementWidget();
-    QString Text() const;
-    void SetText(const QString& text);
-    void SetFocus();
+    QString text() const;
+    void setText(const QString& text);
+    void setFocus();
 
 signals:
-    void AddShortcuted();
-    void MoveUp(ElementWidget*);
-    void MoveDown(ElementWidget*);
-    void FocusUp(ElementWidget*);
-    void FocusDown(ElementWidget*);
+    void addShortcuted();
+    void moveUp(ElementWidget*);
+    void moveDown(ElementWidget*);
+    void focusUp(ElementWidget*);
+    void focusDown(ElementWidget*);
 
 public slots:
-    void ResizeTextEdit();
+    void resizeTextEdit();
 };
 
 #endif // ELEMENTWIDGET_H

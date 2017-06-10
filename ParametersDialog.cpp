@@ -22,12 +22,12 @@ ParametersDialog::ParametersDialog(QWidget *parent) : QDialog(parent)
     _startUpPath = QDir::homePath()+"/.config/autostart/";
 #endif
 
-    _defaultGroupColor = "rgba(127,0,0,50%)";
-    _defaultElementColor = "rgba(255,127,127,50%)";
-    _defaultFontColor = "rgba(255,255,255,255)";
+    _defaultGroupColor = QColor(127, 0, 0, 127).name(QColor::HexArgb);
+    _defaultElementColor = QColor(255, 127, 127, 127).name(QColor::HexArgb);
+    _defaultFontColor = QColor(255, 255, 255).name(QColor::HexArgb);
 
     _startup = new QCheckBox(this);
-    _startup->setChecked(GetStartUpPolicy());
+    _startup->setChecked(getStartUpPolicy());
     _startupContainer = new QWidget(this);
     _cLayout = new QHBoxLayout;
     _cLayout->setMargin(2);
@@ -45,15 +45,15 @@ ParametersDialog::ParametersDialog(QWidget *parent) : QDialog(parent)
     _groupColor = new QPushButton("", this);
     _groupColor->setAutoDefault(false);
     _groupColor->setFixedSize(30,30);
-    _groupColor->setStyleSheet("background: "+GroupColor()+";");
+    _groupColor->setStyleSheet("background: "+groupColor()+";");
     _elementColor = new QPushButton("", this);
     _elementColor->setAutoDefault(false);
     _elementColor->setFixedSize(30,30);
-    _elementColor->setStyleSheet("background: "+ElementColor()+";");
+    _elementColor->setStyleSheet("background: "+elementColor()+";");
     _fontColor = new QPushButton("", this);
     _fontColor->setAutoDefault(false);
     _fontColor->setFixedSize(30,30);
-    _fontColor->setStyleSheet("background: "+FontColor()+";");
+    _fontColor->setStyleSheet("background: "+fontColor()+";");
 
     _layout = new QFormLayout;
     _layout->addRow("Launch on start-up:", _startupContainer);
@@ -64,13 +64,13 @@ ParametersDialog::ParametersDialog(QWidget *parent) : QDialog(parent)
     _layout->addRow("About:", _about);
     setLayout(_layout);
 
-    connect(_share,          SIGNAL(clicked(bool)), this, SLOT(OpenShare()));
-    connect(_startup,        SIGNAL(clicked(bool)), this, SLOT(SetStartUpPolicy(bool)));
-    connect(_about,          SIGNAL(clicked(bool)), this, SLOT(OpenAbout()));
+    connect(_share,          SIGNAL(clicked(bool)), this, SLOT(openShare()));
+    connect(_startup,        SIGNAL(clicked(bool)), this, SLOT(setStartUpPolicy(bool)));
+    connect(_about,          SIGNAL(clicked(bool)), this, SLOT(openAbout()));
 
-    connect(_groupColor,     SIGNAL(clicked(bool)), this, SLOT(SetGroupColor()));
-    connect(_elementColor,   SIGNAL(clicked(bool)), this, SLOT(SetElementColor()));
-    connect(_fontColor,      SIGNAL(clicked(bool)), this, SLOT(SetFontColor()));
+    connect(_groupColor,     SIGNAL(clicked(bool)), this, SLOT(setGroupColor()));
+    connect(_elementColor,   SIGNAL(clicked(bool)), this, SLOT(setElementColor()));
+    connect(_fontColor,      SIGNAL(clicked(bool)), this, SLOT(setFontColor()));
 }
 
 ParametersDialog::~ParametersDialog()
@@ -78,88 +78,77 @@ ParametersDialog::~ParametersDialog()
 
 }
 
-QString ParametersDialog::ColorToRgba(const QColor& color) const
+void ParametersDialog::setGroupColor()
 {
-    return "rgba("+QString::number(color.red())+","+QString::number(color.green())+","+QString::number(color.blue())+","+QString::number(color.alpha())+")";
-}
-
-QColor ParametersDialog::RgbaToColor(const QString& rgba) const
-{
-    QStringList c = QString(rgba).replace("rgba(", "").replace(")", "").split(",");
-    return QColor(c[0].toInt(), c[1].toInt(), c[2].toInt(), c[3].toInt());
-}
-
-void ParametersDialog::SetGroupColor()
-{
-    QColor color = QColorDialog::getColor(RgbaToColor(GroupColor()), this, "Choose Group Color", QColorDialog::ShowAlphaChannel);
+    QColor color = QColorDialog::getColor(QColor(groupColor()), this, "Choose Group Color", QColorDialog::ShowAlphaChannel);
 
     if(color.isValid())
     {
-        _settings->setValue("GroupColor", ColorToRgba(color));
-        _groupColor->setStyleSheet("background: "+ColorToRgba(color)+";");
+        _settings->setValue("GroupColor", color.name(QColor::HexArgb));
+        _groupColor->setStyleSheet("background: "+color.name(QColor::HexArgb)+";");
 
-        emit ColorChanged();
+        emit colorChanged();
     }
 }
 
-void ParametersDialog::SetElementColor()
+void ParametersDialog::setElementColor()
 {
-    QColor color = QColorDialog::getColor(RgbaToColor(ElementColor()), this, "Choose Element Color", QColorDialog::ShowAlphaChannel);
+    QColor color = QColorDialog::getColor(QColor(elementColor()), this, "Choose Element Color", QColorDialog::ShowAlphaChannel);
 
     if(color.isValid())
     {
-        _settings->setValue("ElementColor", ColorToRgba(color));
-        _elementColor->setStyleSheet("background: "+ColorToRgba(color)+";");
+        _settings->setValue("ElementColor", color.name(QColor::HexArgb));
+        _elementColor->setStyleSheet("background: "+color.name(QColor::HexArgb)+";");
 
-        emit ColorChanged();
+        emit colorChanged();
     }
 }
 
-void ParametersDialog::SetFontColor()
+void ParametersDialog::setFontColor()
 {
-    QColor color = QColorDialog::getColor(RgbaToColor(FontColor()), this, "Choose Font Color", QColorDialog::ShowAlphaChannel);
+    QColor color = QColorDialog::getColor(QColor(fontColor()), this, "Choose Font Color", QColorDialog::ShowAlphaChannel);
 
     if(color.isValid())
     {
-        _settings->setValue("FontColor", ColorToRgba(color));
-        _fontColor->setStyleSheet("background: "+ColorToRgba(color)+";");
+        _settings->setValue("FontColor", color.name(QColor::HexArgb));
+        _fontColor->setStyleSheet("background: "+color.name(QColor::HexArgb)+";");
 
-        emit ColorChanged();
+        emit colorChanged();
     }
 }
 
-QString ParametersDialog::GroupColor() const
+QString ParametersDialog::groupColor() const
 {
     return _settings->value("GroupColor", _defaultGroupColor).toString();
 }
 
-QString ParametersDialog::ElementColor() const
+QString ParametersDialog::elementColor() const
 {
     return _settings->value("ElementColor", _defaultElementColor).toString();
 }
 
-QString ParametersDialog::FontColor() const
+QString ParametersDialog::fontColor() const
 {
     return _settings->value("FontColor", _defaultFontColor).toString();
 }
 
-void ParametersDialog::OpenDataFolder() const
+void ParametersDialog::openDataFolder() const
 {
-    Open(DataPath());
+    open(dataPath());
 }
 
-void ParametersDialog::OpenShare() const
+void ParametersDialog::openShare() const
 {
     QString url = "http://www.google.fr"; // TODO
-    Open(url);
+    open(url);
 }
 
-void ParametersDialog::OpenAbout() const
+void ParametersDialog::openAbout() const
 {
-    Open("http://www.xavi-b.fr");
+    open("http://www.xavi-b.fr");
 }
 
-void ParametersDialog::Open(const QString& str) const
+void ParametersDialog::open(const QString& str) const
 {
 #ifdef _WIN32
     QProcess::startDetached("explorer", QStringList() << str);
@@ -170,7 +159,7 @@ void ParametersDialog::Open(const QString& str) const
 #endif
 }
 
-void ParametersDialog::SetStartUpPolicy(bool b)
+void ParametersDialog::setStartUpPolicy(bool b)
 {
 #ifdef _WIN32
     QSettings(_startUpPath, QSettings::NativeFormat).setValue(qApp->applicationName(), b);
@@ -218,7 +207,7 @@ void ParametersDialog::SetStartUpPolicy(bool b)
 #endif
 }
 
-bool ParametersDialog::GetStartUpPolicy() const
+bool ParametersDialog::getStartUpPolicy() const
 {
 #ifdef _WIN32
     return QSettings(_startUpPath, QSettings::NativeFormat).value(qApp->applicationName(), false).toBool();
@@ -229,7 +218,7 @@ bool ParametersDialog::GetStartUpPolicy() const
 #endif
 }
 
-const QString ParametersDialog::DataPath() const
+const QString ParametersDialog::dataPath() const
 {
     if(!QDir().exists(_dataPath))
         QDir().mkdir(_dataPath);
@@ -237,21 +226,21 @@ const QString ParametersDialog::DataPath() const
     return _dataPath;
 }
 
-QSettings* ParametersDialog::Settings() const
+QSettings* ParametersDialog::settings() const
 {
     return _settings;
 }
 
-const QString ParametersDialog::Stylesheet() const
+const QString ParametersDialog::stylesheet() const
 {
     QFile f(":/qss");
 
     if(f.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QString str = f.readAll();
-        str = str.replace("%GROUP_COLOR%", GroupColor());
-        str = str.replace("%ELEMENT_COLOR%", ElementColor());
-        str = str.replace("%FONT_COLOR%", FontColor());
+        str = str.replace("%GROUP_COLOR%", groupColor());
+        str = str.replace("%ELEMENT_COLOR%", elementColor());
+        str = str.replace("%FONT_COLOR%", fontColor());
         f.close();
         return str;
     }

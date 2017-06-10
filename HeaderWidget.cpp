@@ -12,7 +12,7 @@ HeaderLine::~HeaderLine()
 
 void HeaderLine::focusOutEvent(QFocusEvent *event)
 {
-    emit FocusLost();
+    emit focusLost();
     QLineEdit::focusOutEvent(event);
 }
 
@@ -29,7 +29,7 @@ HeaderButton::~HeaderButton()
 void HeaderButton::mousePressEvent(QMouseEvent *event)
 {
     if(event->buttons() & Qt::MiddleButton)
-        emit MiddleClicked();
+        emit middleClicked();
     else
         QPushButton::mousePressEvent(event);
 }
@@ -45,10 +45,10 @@ HeaderWidget::HeaderWidget(const QString& text, QWidget *parent) : QWidget(paren
     _layout->addWidget(_line);
     setLayout(_layout);
 
-    connect(_line,   SIGNAL(returnPressed()),    this, SLOT(ShowButton()));
-    connect(_line,   SIGNAL(FocusLost()),        this, SLOT(ShowButton()));
-    connect(_button, SIGNAL(clicked(bool)),      this, SLOT(ClickButton(bool)));
-    connect(_button, SIGNAL(MiddleClicked()),    this, SLOT(ShowLine()));
+    connect(_line,   SIGNAL(returnPressed()),    this, SLOT(showButton()));
+    connect(_line,   SIGNAL(focusLost()),        this, SLOT(showButton()));
+    connect(_button, SIGNAL(clicked(bool)),      this, SLOT(clickButton(bool)));
+    connect(_button, SIGNAL(middleClicked()),    this, SLOT(showLine()));
 }
 
 HeaderWidget::~HeaderWidget()
@@ -56,32 +56,32 @@ HeaderWidget::~HeaderWidget()
 
 }
 
-void HeaderWidget::SetText(const QString& text)
+void HeaderWidget::setText(const QString& text)
 {
     _button->setText(text);
     _line->setText(text);
 }
 
-QString HeaderWidget::Text() const
+QString HeaderWidget::text() const
 {
     return _button->text();
 }
 
-void HeaderWidget::ShowButton()
+void HeaderWidget::showButton()
 {
     _layout->setCurrentWidget(_button);
     _button->setFocus();
     _button->setText(_line->text());
 }
 
-void HeaderWidget::ShowLine()
+void HeaderWidget::showLine()
 {
     _layout->setCurrentWidget(_line);
     _line->setFocus();
     _line->setText(_button->text());
 }
 
-void HeaderWidget::ClickButton(bool b)
+void HeaderWidget::clickButton(bool b)
 {
     emit clicked(b);
 }

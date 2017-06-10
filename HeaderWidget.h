@@ -18,11 +18,11 @@ protected:
     void focusOutEvent(QFocusEvent *event);
 
 public:
-    HeaderLine(const QString& text = "", QWidget *parent = 0);
+    HeaderLine(const QString& text = "", QWidget *parent = nullptr);
     virtual ~HeaderLine();
 
 signals:
-    void FocusLost();
+    void focusLost();
 };
 
 class HeaderButton : public QPushButton
@@ -36,11 +36,11 @@ protected:
     void mousePressEvent(QMouseEvent *event);
 
 public:
-    HeaderButton(const QString& text = "", QWidget *parent = 0);
+    HeaderButton(const QString& text = "", QWidget *parent = nullptr);
     virtual ~HeaderButton();
 
 signals:
-    void MiddleClicked();
+    void middleClicked();
 };
 
 class HeaderWidget : public QWidget
@@ -55,18 +55,18 @@ private:
     HeaderLine* _line;
 
 public:
-    HeaderWidget(const QString& text = "", QWidget *parent = 0);
+    HeaderWidget(const QString& text = "", QWidget *parent = nullptr);
     virtual ~HeaderWidget();
-    void SetText(const QString& text);
-    QString Text() const;
+    void setText(const QString& text);
+    QString text() const;
 
 signals:
     void clicked(bool b);
 
 public slots:
-    void ShowButton();
-    void ShowLine();
-    void ClickButton(bool b);
+    void showButton();
+    void showLine();
+    void clickButton(bool b);
 };
 
 #endif // HEADERWIDGET_H

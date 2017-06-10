@@ -20,16 +20,16 @@ private:
     QAction* _quit;
 
 public:
-    MenuToolBar(QWidget *parent = 0);
+    MenuToolBar(QWidget *parent = nullptr);
     virtual ~MenuToolBar();
 
 signals:
-    void AddPressed();
-    void ParametersPressed();
+    void addPressed();
+    void parametersPressed();
 
 public slots:
-    void PressAdd();
-    void PressParameters();
+    void pressAdd();
+    void pressParameters();
 };
 
 #endif // MENUWIDGET_H

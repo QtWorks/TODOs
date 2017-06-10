@@ -21,11 +21,11 @@ protected:
     void enterEvent(QEvent *event);
 
 public:
-    StatusBar(QWidget* parent = 0);
+    StatusBar(QWidget* parent = nullptr);
     virtual ~StatusBar();
 
 signals:
-    void Moved(const QPoint);
+    void moved(const QPoint);
 };
 
 #endif // STATUSBAR_H

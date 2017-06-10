@@ -37,30 +37,28 @@ private:
     QString _defaultFontColor;
 
 public:
-    ParametersDialog(QWidget* parent = 0);
+    ParametersDialog(QWidget* parent = nullptr);
     virtual ~ParametersDialog();
-    const QString DataPath() const;
-    bool GetStartUpPolicy() const;
-    QSettings* Settings() const;
-    const QString Stylesheet() const;
-    QString ColorToRgba(const QColor& color) const;
-    QColor RgbaToColor(const QString& rgba) const;
-    QString GroupColor() const;
-    QString ElementColor() const;
-    QString FontColor() const;
+    const QString dataPath() const;
+    bool getStartUpPolicy() const;
+    QSettings* settings() const;
+    const QString stylesheet() const;
+    QString groupColor() const;
+    QString elementColor() const;
+    QString fontColor() const;
 
 signals:
-    void ColorChanged();
+    void colorChanged();
 
 public slots:
-    void OpenDataFolder() const;
-    void OpenShare() const;
-    void OpenAbout() const;
-    void Open(const QString& str) const;
-    void SetStartUpPolicy(bool b);
-    void SetGroupColor();
-    void SetElementColor();
-    void SetFontColor();
+    void openDataFolder() const;
+    void openShare() const;
+    void openAbout() const;
+    void open(const QString& str) const;
+    void setStartUpPolicy(bool b);
+    void setGroupColor();
+    void setElementColor();
+    void setFontColor();
 };
 
 #endif // PARAMETERSDIALOG_H

@@ -16,8 +16,8 @@ MenuToolBar::MenuToolBar(QWidget *parent) : QToolBar(parent)
     (static_cast<QToolButton*>(widgetForAction(_parameters)))->setAutoRaise(false);
     (static_cast<QToolButton*>(widgetForAction(_quit)))->setAutoRaise(false);
 
-    connect(_add,        SIGNAL(triggered(bool)), this, SLOT(PressAdd()));
-    connect(_parameters, SIGNAL(triggered(bool)), this, SLOT(PressParameters()));
+    connect(_add,        SIGNAL(triggered(bool)), this, SLOT(pressAdd()));
+    connect(_parameters, SIGNAL(triggered(bool)), this, SLOT(pressParameters()));
     connect(_quit,       SIGNAL(triggered(bool)), qApp, SLOT(closeAllWindows()));
 }
 
@@ -26,12 +26,12 @@ MenuToolBar::~MenuToolBar()
 
 }
 
-void MenuToolBar::PressAdd()
+void MenuToolBar::pressAdd()
 {
-    emit AddPressed();
+    emit addPressed();
 }
 
-void MenuToolBar::PressParameters()
+void MenuToolBar::pressParameters()
 {
-    emit ParametersPressed();
+    emit parametersPressed();
 }

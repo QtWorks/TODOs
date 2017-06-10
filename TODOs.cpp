@@ -7,8 +7,8 @@ TODOs::TODOs(int argc, char *argv[]) : QApplication(argc, argv)
 
     w.show();
 
-    connect(this, SIGNAL(lastWindowClosed()), &w, SLOT(WriteData()));
-    connect(this, SIGNAL(lastWindowClosed()), &w, SLOT(WriteSettings()));
+    connect(this, SIGNAL(lastWindowClosed()), &w, SLOT(writeData()));
+    connect(this, SIGNAL(lastWindowClosed()), &w, SLOT(writeSettings()));
 }
 
 TODOs::~TODOs()

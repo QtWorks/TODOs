@@ -23,27 +23,27 @@ private:
     bool _isExpanded;
 
 public:
-    GroupWidget(QWidget *parent = 0);
+    GroupWidget(QWidget *parent = nullptr);
     virtual ~GroupWidget();
-    int Count() const;
-    ElementWidget* GetElement(int i);
-    QString Title() const;
-    void SetTitle(const QString& title);
-    bool IsExpanded() const;
-    GroupHeaderWidget* GetGroupHeaderWidget();
+    int count() const;
+    ElementWidget* getElement(int i);
+    QString title() const;
+    void setTitle(const QString& title);
+    bool isExpanded() const;
+    GroupHeaderWidget* getGroupHeaderWidget();
 
 signals:
-    void EnsureElementIsVisible(QWidget* w);
+    void ensureElementIsVisible(QWidget* w);
 
 public slots:
-    void Expand();
-    ElementWidget* AddElement(const QString& text="");
-    void MoveUpElement(ElementWidget* w);
-    void MoveDownElement(ElementWidget* w);
-    void FocusUpElement(ElementWidget* w);
-    void FocusDownElement(ElementWidget* w);
-    void DeleteAllElements();
-    void MoveInLayout(QPoint v);
+    void expand();
+    ElementWidget* addElement(const QString& text="");
+    void moveUpElement(ElementWidget* w);
+    void moveDownElement(ElementWidget* w);
+    void focusUpElement(ElementWidget* w);
+    void focusDownElement(ElementWidget* w);
+    void deleteAllElements();
+    void moveInLayout(QPoint v);
 };
 
 #endif // GROUPWIDGET_H

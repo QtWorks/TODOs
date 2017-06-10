@@ -52,9 +52,9 @@ ElementWidget::ElementWidget(const QString& text, QWidget *parent) : QFrame(pare
     setLayout(_layout);
 
     connect(_remove, SIGNAL(clicked(bool)), this, SLOT(deleteLater()));
-    connect(_text,   SIGNAL(textChanged()), this, SLOT(ResizeTextEdit()));
+    connect(_text,   SIGNAL(textChanged()), this, SLOT(resizeTextEdit()));
 
-    ResizeTextEdit();
+    resizeTextEdit();
 }
 
 ElementWidget::~ElementWidget()
@@ -62,7 +62,7 @@ ElementWidget::~ElementWidget()
 
 }
 
-void ElementWidget::ResizeTextEdit()
+void ElementWidget::resizeTextEdit()
 {
     int height = _text->document()->size().height();
 
@@ -73,41 +73,41 @@ void ElementWidget::ResizeTextEdit()
     setFixedHeight(height);
 }
 
-QString ElementWidget::Text() const
+QString ElementWidget::text() const
 {
     return _text->toPlainText();
 }
 
-void ElementWidget::SetText(const QString& text)
+void ElementWidget::setText(const QString& text)
 {
     _text->setPlainText(text);
-    ResizeTextEdit();
+    resizeTextEdit();
 }
 
-void ElementWidget::SetFocus()
+void ElementWidget::setFocus()
 {
     _text->setFocus();
 }
 
 void ElementWidget::showEvent(QShowEvent *event)
 {
-    ResizeTextEdit();
+    resizeTextEdit();
 }
 
 void ElementWidget::keyPressEvent(QKeyEvent *event)
 {
     if(event->matches(QKeySequence::AddTab) || event->matches(QKeySequence::New))
     {
-        emit AddShortcuted();
+        emit addShortcuted();
     }
 
     if(event->modifiers() & Qt::ControlModifier)
     {
         if(event->key() == Qt::Key_Up)
-            emit MoveUp(this);
+            emit moveUp(this);
 
         if(event->key() == Qt::Key_Down)
-            emit MoveDown(this);
+            emit moveDown(this);
 
         if(event->key() == Qt::Key_W)
             deleteLater();
@@ -116,10 +116,10 @@ void ElementWidget::keyPressEvent(QKeyEvent *event)
     if(event->modifiers() & Qt::AltModifier)
     {
         if(event->key() == Qt::Key_Up)
-            emit FocusUp(this);
+            emit focusUp(this);
 
         if(event->key() == Qt::Key_Down)
-            emit FocusDown(this);
+            emit focusDown(this);
     }
 
     if(event->key() == Qt::Key_Escape)

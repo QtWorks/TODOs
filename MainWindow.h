@@ -33,18 +33,18 @@ private:
     ParametersDialog* _parameters;
 
 public:
-    MainWindow(QWidget *parent = 0);
+    MainWindow(QWidget *parent = nullptr);
     virtual ~MainWindow();
-    void ReadData();
-    void ReadSettings();
+    void readData();
+    void readSettings();
 
 public slots:
-    void ShowElement(QWidget* w);
-    GroupWidget *AddGroupWidget();
-    void WriteData();
-    void WriteSettings();
-    void Move(const QPoint v);
-    void LoadStyleSheet();
+    void showElement(QWidget* w);
+    GroupWidget *addGroupWidget();
+    void writeData();
+    void writeSettings();
+    void move(const QPoint v);
+    void loadStyleSheet();
 };
 
 #endif // MAINWINDOW_H

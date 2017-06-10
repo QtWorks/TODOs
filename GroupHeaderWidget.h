@@ -28,26 +28,26 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
 
 public:
-    GroupHeaderWidget(QWidget *parent = 0);
+    GroupHeaderWidget(QWidget *parent = nullptr);
     virtual ~GroupHeaderWidget();
-    QString Title() const;
-    void SetTitle(const QString& title);
-    HeaderWidget* GetHeaderWidget();
+    QString title() const;
+    void setTitle(const QString& title);
+    HeaderWidget* getHeaderWidget();
 
 signals:
-    void ExpandPressed();
-    void AddPressed();
-    void DeleteAllTriggered();
-    void DeleteTriggered();
-    void GroupMoving(QPoint);
-    void GroupMoved(QPoint);
+    void expandPressed();
+    void addPressed();
+    void deleteAllTriggered();
+    void deleteTriggered();
+    void groupMoving(QPoint);
+    void groupMoved(QPoint);
 
 public slots:
-    void ShowContextMenu(const QPoint& position);
-    void PressExpand();
-    void PressAdd();
-    void TriggerDeleteAll();
-    void TriggerDelete();
+    void showContextMenu(const QPoint& position);
+    void pressExpand();
+    void pressAdd();
+    void triggerDeleteAll();
+    void triggerDelete();
 };
 
 #endif // GROUPHEADERWIDGET_H
