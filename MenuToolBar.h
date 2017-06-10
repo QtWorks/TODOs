@@ -27,9 +27,6 @@ signals:
     void addPressed();
     void parametersPressed();
 
-public slots:
-    void pressAdd();
-    void pressParameters();
 };
 
 #endif // MENUWIDGET_H

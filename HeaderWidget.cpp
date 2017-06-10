@@ -1,21 +1,5 @@
 #include "HeaderWidget.h"
 
-HeaderLine::HeaderLine(const QString& text, QWidget *parent) : QLineEdit(text, parent)
-{
-
-}
-
-HeaderLine::~HeaderLine()
-{
-
-}
-
-void HeaderLine::focusOutEvent(QFocusEvent *event)
-{
-    emit focusLost();
-    QLineEdit::focusOutEvent(event);
-}
-
 HeaderButton::HeaderButton(const QString &text, QWidget *parent) : QPushButton(text, parent)
 {
 
@@ -37,7 +21,7 @@ void HeaderButton::mousePressEvent(QMouseEvent *event)
 HeaderWidget::HeaderWidget(const QString& text, QWidget *parent) : QWidget(parent)
 {
     _button = new HeaderButton(text, this);
-    _line = new HeaderLine(text, this);
+    _line = new QLineEdit(text, this);
     _line->setAlignment(Qt::AlignHCenter);
 
     _layout = new QStackedLayout;
@@ -45,9 +29,9 @@ HeaderWidget::HeaderWidget(const QString& text, QWidget *parent) : QWidget(paren
     _layout->addWidget(_line);
     setLayout(_layout);
 
-    connect(_line,   SIGNAL(returnPressed()),    this, SLOT(showButton()));
-    connect(_line,   SIGNAL(focusLost()),        this, SLOT(showButton()));
-    connect(_button, SIGNAL(clicked(bool)),      this, SLOT(clickButton(bool)));
+    connect(_line,   SIGNAL(editingFinished()),  this, SLOT(showButton()));
+    //connect(_line,   SIGNAL(focusLost()),        this, SLOT(showButton()));
+    connect(_button, SIGNAL(clicked(bool)),      this, SIGNAL(clicked(bool)));
     connect(_button, SIGNAL(middleClicked()),    this, SLOT(showLine()));
 }
 
@@ -79,9 +63,4 @@ void HeaderWidget::showLine()
     _layout->setCurrentWidget(_line);
     _line->setFocus();
     _line->setText(_button->text());
-}
-
-void HeaderWidget::clickButton(bool b)
-{
-    emit clicked(b);
 }

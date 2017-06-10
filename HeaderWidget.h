@@ -7,24 +7,6 @@
 #include <QLineEdit>
 #include <QMouseEvent>
 
-class HeaderLine : public QLineEdit
-{
-    Q_OBJECT
-
-private:
-    Q_DISABLE_COPY(HeaderLine)
-
-protected:
-    void focusOutEvent(QFocusEvent *event);
-
-public:
-    HeaderLine(const QString& text = "", QWidget *parent = nullptr);
-    virtual ~HeaderLine();
-
-signals:
-    void focusLost();
-};
-
 class HeaderButton : public QPushButton
 {
     Q_OBJECT
@@ -52,7 +34,7 @@ private:
 
     QStackedLayout* _layout;
     HeaderButton* _button;
-    HeaderLine* _line;
+    QLineEdit* _line;
 
 public:
     HeaderWidget(const QString& text = "", QWidget *parent = nullptr);
@@ -66,7 +48,7 @@ signals:
 public slots:
     void showButton();
     void showLine();
-    void clickButton(bool b);
+
 };
 
 #endif // HEADERWIDGET_H

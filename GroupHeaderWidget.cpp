@@ -19,33 +19,13 @@ GroupHeaderWidget::GroupHeaderWidget(QWidget *parent) : QWidget(parent)
 
     connect(_title,  SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)));
 
-    connect(_title,  SIGNAL(clicked(bool)), this, SLOT(pressExpand()));
-    connect(_add,    SIGNAL(clicked(bool)), this, SLOT(pressAdd()));
+    connect(_title,  SIGNAL(clicked(bool)), this, SIGNAL(expandPressed()));
+    connect(_add,    SIGNAL(clicked(bool)), this, SIGNAL(addPressed()));
 }
 
 GroupHeaderWidget::~GroupHeaderWidget()
 {
 
-}
-
-void GroupHeaderWidget::pressExpand()
-{
-    emit expandPressed();
-}
-
-void GroupHeaderWidget::pressAdd()
-{
-    emit addPressed();
-}
-
-void GroupHeaderWidget::triggerDeleteAll()
-{
-    emit deleteAllTriggered();
-}
-
-void GroupHeaderWidget::triggerDelete()
-{
-    emit deleteTriggered();
 }
 
 void GroupHeaderWidget::showContextMenu(const QPoint& position)
@@ -57,8 +37,8 @@ void GroupHeaderWidget::showContextMenu(const QPoint& position)
     QAction deleteA("Delete Group", this);
     contextMenu.addAction(&deleteA);
 
-    connect(&deleteAllA,    SIGNAL(triggered()), this, SLOT(triggerDeleteAll()));
-    connect(&deleteA,       SIGNAL(triggered()), this, SLOT(triggerDelete()));
+    connect(&deleteAllA,    SIGNAL(triggered()), this, SIGNAL(deleteAllTriggered()));
+    connect(&deleteA,       SIGNAL(triggered()), this, SIGNAL(deleteTriggered()));
 
     contextMenu.exec(_title->mapToGlobal(position));
 }

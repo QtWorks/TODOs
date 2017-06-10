@@ -23,8 +23,6 @@ public:
     ElementText(const QString& text = "", QWidget *parent = nullptr);
     virtual ~ElementText();
 
-signals:
-    void focusLost();
 };
 
 class ElementWidget : public QFrame

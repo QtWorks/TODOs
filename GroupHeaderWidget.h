@@ -44,10 +44,7 @@ signals:
 
 public slots:
     void showContextMenu(const QPoint& position);
-    void pressExpand();
-    void pressAdd();
-    void triggerDeleteAll();
-    void triggerDelete();
+
 };
 
 #endif // GROUPHEADERWIDGET_H
