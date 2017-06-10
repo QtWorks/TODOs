@@ -78,7 +78,7 @@ ElementWidget
 ElementWidget > QTextEdit
 {
   font-size: 24em;
-  color: white;
+  color: %FONT_COLOR%;
   border: none;
   background: rgba(0,0,0,0%);
 }
@@ -90,20 +90,20 @@ ElementWidget > QTextEdit:focus
 
 ElementWidget > QPushButton
 {
-  color: white;
+  color: %FONT_COLOR%;
   border: none;
 }
 
-HeaderLine
+HeaderWidget > QLineEdit
 {
-  color: white;
+  color: %FONT_COLOR%;
   border: none;
   background: %GROUP_COLOR%;
 }
 
 HeaderButton
 {
-  color: white;
+  color: %FONT_COLOR%;
   border: none;
   background: %GROUP_COLOR%;
 }
