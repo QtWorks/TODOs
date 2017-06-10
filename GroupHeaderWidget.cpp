@@ -1,5 +1,7 @@
 #include "GroupHeaderWidget.h"
 
+#include "TODOs.h"
+
 GroupHeaderWidget::GroupHeaderWidget(QWidget *parent) : QWidget(parent)
 {
     _title = new HeaderWidget("Group", this);
@@ -83,4 +85,9 @@ void GroupHeaderWidget::mouseReleaseEvent(QMouseEvent *event)
 HeaderWidget* GroupHeaderWidget::getHeaderWidget()
 {
     return _title;
+}
+
+void GroupHeaderWidget::updateIcons(const QString& color)
+{
+    _add->setIcon(TODOs::colorizeIcon(":/images/add", QColor(color)));
 }

@@ -2,6 +2,8 @@
 #define TODOS_H
 
 #include <QApplication>
+#include <QPixmap>
+#include <QBitmap>
 
 #include "MainWindow.h"
 
@@ -15,6 +17,8 @@ private:
 public:
     TODOs(int argc, char *argv[]);
     virtual ~TODOs();
+    static QIcon colorizeIcon(const QString& iconFileName, const QColor& color);
+
 };
 
 #endif // TODOS_H

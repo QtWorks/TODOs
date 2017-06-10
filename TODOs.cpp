@@ -15,3 +15,12 @@ TODOs::~TODOs()
 {
 
 }
+
+QIcon TODOs::colorizeIcon(const QString& iconFileName, const QColor& color)
+{
+    QPixmap px(iconFileName);
+    QPixmap pxr(px.size());
+    pxr.fill(color);
+    pxr.setMask(px.createMaskFromColor(Qt::transparent));
+    return QIcon(pxr);
+}

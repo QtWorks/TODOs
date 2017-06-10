@@ -1,5 +1,7 @@
 #include "ElementWidget.h"
 
+#include "TODOs.h"
+
 ElementText::ElementText(const QString& text, QWidget *parent) : QTextEdit(text, parent)
 {
 
@@ -87,6 +89,11 @@ void ElementWidget::setText(const QString& text)
 void ElementWidget::setFocus()
 {
     _text->setFocus();
+}
+
+void ElementWidget::updateIcons(const QString& color)
+{
+    _remove->setIcon(TODOs::colorizeIcon(":/images/delete", QColor(color)));
 }
 
 void ElementWidget::showEvent(QShowEvent *event)

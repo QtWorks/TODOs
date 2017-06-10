@@ -33,6 +33,7 @@ public:
     QString title() const;
     void setTitle(const QString& title);
     HeaderWidget* getHeaderWidget();
+    void updateIcons(const QString& color);
 
 signals:
     void expandPressed();

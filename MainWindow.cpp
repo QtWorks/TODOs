@@ -50,6 +50,25 @@ MainWindow::~MainWindow()
 void MainWindow::loadStyleSheet()
 {
     setStyleSheet(_parameters->stylesheet());
+    _menu->updateIcons(_parameters->fontColor());
+
+    for(int i=0; i<_layout->count(); i++)
+    {
+        QLayoutItem* item;
+        if((item = _layout->itemAt(i)) != NULL)
+        {
+            GroupWidget* group = qobject_cast<GroupWidget*>(item->widget());
+
+            if(group)
+            {
+                group->updateIcons(_parameters->fontColor());
+                for(int j=0; j<group->count(); j++)
+                {
+                    group->getElement(j)->updateIcons(_parameters->fontColor());
+                }
+            }
+        }
+    }
 }
 
 void MainWindow::moveWindow(const QPoint v)
@@ -69,6 +88,7 @@ GroupWidget* MainWindow::addGroupWidget()
     connect(group, SIGNAL(ensureElementIsVisible(QWidget*)), this, SLOT(showElement(QWidget*)));
     _layout->addWidget(group);
     group->getGroupHeaderWidget()->getHeaderWidget()->showLine();
+    group->updateIcons(_parameters->fontColor());
     showElement(group);
     return group;
 }
@@ -125,20 +145,24 @@ void MainWindow::writeData()
                 QJsonObject groupObject;
                 QJsonArray elements;
 
-                GroupWidget* group = static_cast<GroupWidget*>(item->widget());
-                groupObject["title"] = group->title();
-                groupObject["expanded"] = group->isExpanded();
+                GroupWidget* group = qobject_cast<GroupWidget*>(item->widget());
 
-                for(int j=0; j<group->count(); j++)
+                if(group)
                 {
-                    QJsonObject elementObject;
-                    elementObject["text"] = group->getElement(j)->text();
-                    elements.append(elementObject);
+                    groupObject["title"] = group->title();
+                    groupObject["expanded"] = group->isExpanded();
+
+                    for(int j=0; j<group->count(); j++)
+                    {
+                        QJsonObject elementObject;
+                        elementObject["text"] = group->getElement(j)->text();
+                        elements.append(elementObject);
+                    }
+
+                    groupObject["elements"] = elements;
+
+                    groups.append(groupObject);
                 }
-
-                groupObject["elements"] = elements;
-
-                groups.append(groupObject);
             }
         }
 

@@ -37,6 +37,7 @@ public:
     virtual ~MainWindow();
     void readData();
     void readSettings();
+    ParametersDialog* parametersDialog() { return _parameters; }
 
 public slots:
     void showElement(QWidget* w);

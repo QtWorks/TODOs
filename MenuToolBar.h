@@ -21,7 +21,8 @@ private:
 
 public:
     MenuToolBar(QWidget *parent = nullptr);
-    virtual ~MenuToolBar();
+    virtual ~MenuToolBar();    
+    void updateIcons(const QString& color);
 
 signals:
     void addPressed();

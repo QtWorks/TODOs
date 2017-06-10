@@ -46,6 +46,7 @@ public:
     QString text() const;
     void setText(const QString& text);
     void setFocus();
+    void updateIcons(const QString& color);
 
 signals:
     void addShortcuted();

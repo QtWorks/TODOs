@@ -30,7 +30,6 @@ GroupWidget::GroupWidget(QWidget *parent) : QWidget(parent), _isExpanded(true)
     connect(_header, SIGNAL(deleteTriggered()),      this, SLOT(deleteLater()));
 
     connect(_header, SIGNAL(groupMoved(QPoint)),     this, SLOT(moveInLayout(QPoint)));
-    _container->hide();
 }
 
 GroupWidget::~GroupWidget()
@@ -59,6 +58,7 @@ ElementWidget* GroupWidget::addElement(const QString& text)
         expand();
 
     ElementWidget* element = new ElementWidget(text);
+    element->updateIcons(_iconColor);
     _cLayout->addWidget(element);
     connect(element, SIGNAL(addShortcuted()),           this, SLOT(addElement()));
     connect(element, SIGNAL(moveUp(ElementWidget*)),    this, SLOT(moveUpElement(ElementWidget*)));
@@ -136,7 +136,7 @@ ElementWidget* GroupWidget::getElement(int i)
 {
     QLayoutItem* item;
     if((item = _cLayout->itemAt(i)) != NULL)
-        return static_cast<ElementWidget*>(item->widget());
+        return qobject_cast<ElementWidget*>(item->widget());
     else
         return NULL;
 }
@@ -153,7 +153,7 @@ void GroupWidget::setTitle(const QString& title)
 
 void GroupWidget::moveInLayout(QPoint v)
 {
-    QVBoxLayout* parentLayout = static_cast<QVBoxLayout*>(parentWidget()->layout());
+    QVBoxLayout* parentLayout = qobject_cast<QVBoxLayout*>(parentWidget()->layout());
 
     int index = parentLayout->indexOf(this);
 
@@ -173,4 +173,10 @@ void GroupWidget::moveInLayout(QPoint v)
 GroupHeaderWidget* GroupWidget::getGroupHeaderWidget()
 {
     return _header;
+}
+
+void GroupWidget::updateIcons(const QString& color)
+{
+    _iconColor = color;
+    _header->updateIcons(color);
 }

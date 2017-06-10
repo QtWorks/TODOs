@@ -21,6 +21,7 @@ private:
     QWidget* _container;
 
     bool _isExpanded;
+    QString _iconColor;
 
 public:
     GroupWidget(QWidget *parent = nullptr);
@@ -31,6 +32,7 @@ public:
     void setTitle(const QString& title);
     bool isExpanded() const;
     GroupHeaderWidget* getGroupHeaderWidget();
+    void updateIcons(const QString& color);
 
 signals:
     void ensureElementIsVisible(QWidget* w);
