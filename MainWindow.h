@@ -43,7 +43,7 @@ public slots:
     GroupWidget *addGroupWidget();
     void writeData();
     void writeSettings();
-    void move(const QPoint v);
+    void moveWindow(const QPoint v);
     void loadStyleSheet();
 };
 

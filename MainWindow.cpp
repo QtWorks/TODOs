@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(_menu, SIGNAL(addPressed()),         this,          SLOT(addGroupWidget()));
     connect(_menu, SIGNAL(parametersPressed()),  _parameters,   SLOT(open()));
 
-    connect(_statusBar, SIGNAL(moved(QPoint)),   this, SLOT(move(QPoint)));
+    connect(_statusBar, SIGNAL(moved(QPoint)),   this, SLOT(moveWindow(QPoint)));
 
     connect(_parameters, SIGNAL(colorChanged()), this, SLOT(loadStyleSheet()));
 
@@ -52,7 +52,7 @@ void MainWindow::loadStyleSheet()
     setStyleSheet(_parameters->stylesheet());
 }
 
-void MainWindow::move(const QPoint v)
+void MainWindow::moveWindow(const QPoint v)
 {
     move(v);
 }
